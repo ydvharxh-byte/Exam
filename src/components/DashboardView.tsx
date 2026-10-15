@@ -1,337 +1,609 @@
 import React, { useState } from "react";
-import { Page, Announcement } from "../data/types";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Page, Announcement, ResourceItem, Question } from "../data/types";
+import { practiceDriveTopics } from "../data/driveTopics";
+import { 
+  ArrowRight, 
+  Calendar, 
+  BookOpen, 
+  FileQuestion, 
+  MessageSquare, 
+  Bell, 
+  FolderOpen,
+  ExternalLink,
+  Sparkles,
+  CheckCircle2,
+  Award
+} from "lucide-react";
 
 interface DashboardViewProps {
   educatorName?: string;
   educatorDesignation?: string;
   educatorRegion?: string;
   onNavigate: (page: Page) => void;
-  announcements: Announcement[];
-  resourcesCount?: number;
-  questionsCount?: number;
-  resources?: any[];
-  questions?: any[];
+  announcements?: Announcement[];
+  resources?: ResourceItem[];
+  questions?: Question[];
   savedResourcesCount?: number;
   completedQuizzesCount?: number;
+  onOpenPracticeMore?: () => void;
 }
 
 export const DashboardView: React.FC<DashboardViewProps> = ({
   onNavigate,
-  announcements
+  onOpenPracticeMore
 }) => {
-  const [announcementDismissed, setAnnouncementDismissed] = useState(false);
   const [heroSlide, setHeroSlide] = useState(0);
 
   const heroSlides = [
     {
+      quote: "Education is the most powerful weapon which you can use to change the world.",
+      author: "Dr. A.P.J. Abdul Kalam",
+      subheading: "CENTRAL ADMINISTRATIVE & LEADERSHIP EXAM",
       titleLine1: "Learn Today,",
       titleLine2: "Lead Tomorrow",
-      tagline: "Better Principals • Better Schools • A Stronger India",
-      subheading: "KVS PRINCIPAL EXAM"
+      tagline: "Excellence in Administration • Leadership • Integrity"
     },
     {
-      titleLine1: "Integrity in Rules,",
-      titleLine2: "Excellence in Action",
-      tagline: "Master GFR 2017 • CCS Rules • NEP 2020 Guidelines",
-      subheading: "ADMINISTRATIVE MASTERY"
+      quote: "The mind is not a vessel to be filled, but a fire to be kindled.",
+      author: "Plutarch",
+      subheading: "EDUCATIONAL LEADERSHIP",
+      titleLine1: "Inspire Excellence,",
+      titleLine2: "Shape the Future",
+      tagline: "Pedagogy • Governance • National Education Policy"
     }
   ];
 
-  const currentSlide = heroSlides[heroSlide];
+  const currentHero = heroSlides[heroSlide];
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 md:py-10 space-y-10">
-      {/* 1. Hero Panoramic Banner matching the user's screenshot */}
-      <section className="relative w-full overflow-hidden rounded-2xl bg-[#EAE2C8] shadow-md border border-[#D5CBB4]" style={{ minHeight: "460px" }}>
-        {/* Background Image of Educator at desk */}
-        <img
-          src="/images/hero-teacher.jpg"
-          className="absolute inset-0 w-full h-full object-cover object-[25%_25%] opacity-90 mix-blend-multiply"
-          alt="Educator at desk"
-        />
+    <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 md:py-8 space-y-9 font-sans">
+      {/* 1. Hero Panoramic Banner (Exact replica of Image 1) */}
+      <section className="relative w-full overflow-hidden rounded-3xl bg-[#11382B] text-white shadow-xl min-h-[380px] lg:min-h-[410px] flex items-center border border-[#1E4D3B]/40">
+        {/* Dignified Educator Portrait placed in background/right */}
+        <div className="absolute inset-0 z-0 flex justify-center lg:justify-end items-center pointer-events-none">
+          <img
+            src="/images/kvs-hero-principal.jpg"
+            alt="Administrative Study Desk"
+            className="w-full h-full object-cover object-[70%_25%] lg:w-[68%] lg:object-right opacity-80 lg:opacity-90"
+          />
+          {/* Subtle gradient overlay to merge educator with forest green */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#11382B] via-[#11382B]/85 to-transparent lg:w-[65%]"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-[#11382B] via-transparent to-transparent lg:hidden"></div>
+        </div>
 
-        {/* Gradient fade to parchment text overlay on the right */}
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#EAE2C8]/70 to-[#EAE2C8] w-full h-full pointer-events-none"></div>
+        {/* Decorative corner leaves */}
+        <div className="absolute top-4 left-4 z-10 text-[#52876E]/40 pointer-events-none hidden sm:block">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17 8C8 10 5 16 5 21C10 21 16 18 18 9C19 5 19 3 19 3C19 3 17 4 17 8Z" />
+          </svg>
+        </div>
+        <div className="absolute bottom-4 left-4 z-10 text-[#52876E]/30 pointer-events-none hidden sm:block">
+          <svg width="60" height="60" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2ZM15.5 16.5C12.5 17 9 15.5 8 13.5C7 11.5 8 8 11.5 7.5C15 7 16.5 10 16.5 12.5C16.5 15 15.5 16.5 15.5 16.5Z" />
+          </svg>
+        </div>
 
-        {/* Carousel Prev/Next Buttons */}
-        <button
-          onClick={() => setHeroSlide((prev) => (prev === 0 ? heroSlides.length - 1 : prev - 1))}
-          className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center transition backdrop-blur-xs"
-          aria-label="Previous slide"
-        >
-          <ChevronLeft className="w-5 h-5" />
-        </button>
+        {/* Hero Content Grid: Left Text + Right Quote */}
+        <div className="relative z-10 w-full p-6 sm:p-10 lg:p-12 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+          {/* Left: Heading & Call to Action */}
+          <div className="max-w-xl space-y-4">
+            <div className="inline-flex items-center gap-2 text-[#96C3A8] text-xs font-semibold tracking-wider uppercase">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-4 h-4">
+                <path d="M19.5 4.5C19.5 4.5 15 5 11 9C7 13 6 18 6 18C6 18 11 17 15 13C19 9 19.5 4.5 19.5 4.5Z" fill="#96C3A8" />
+              </svg>
+              <span>{currentHero.subheading}</span>
+            </div>
 
-        <button
-          onClick={() => setHeroSlide((prev) => (prev === heroSlides.length - 1 ? 0 : prev + 1))}
-          className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center transition backdrop-blur-xs"
-          aria-label="Next slide"
-        >
-          <ChevronRight className="w-5 h-5" />
-        </button>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl text-white font-serif-title font-bold leading-[1.12] tracking-tight whitespace-pre-line">
+              {currentHero.titleLine1} <br className="hidden sm:inline" />
+              {currentHero.titleLine2}
+            </h1>
 
-        {/* Hero Content Right Overlay */}
-        <div className="relative z-10 flex flex-col justify-center h-full p-8 md:p-14 lg:p-16 max-w-2xl ml-auto text-right min-h-[460px]">
-          <div className="flex items-center justify-end gap-3 text-[#4a5f36] mb-4">
-            <div className="h-[1px] w-12 bg-[#8a7f66]"></div>
-            <p className="text-xs sm:text-sm font-semibold tracking-[0.25em] text-[#3c4a2e]">
-              — {currentSlide.subheading} —
+            <p className="text-xs sm:text-sm text-[#BFD6C8] font-medium tracking-wide">
+              {currentHero.tagline}
             </p>
-          </div>
 
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl text-[#1f2918] mb-5 leading-[1.08] font-serif-title font-medium">
-            {currentSlide.titleLine1}<br />
-            {currentSlide.titleLine2}
-          </h2>
-
-          <div className="flex items-center justify-end gap-2 text-sm md:text-base italic text-[#4f4534] font-serif">
-            {currentSlide.tagline}
-          </div>
-
-          {/* Book Spine Labels Decoration on Bottom Right */}
-          <div className="mt-8 flex justify-end">
-            <div className="flex flex-col items-end gap-1 font-serif text-[11px] tracking-widest text-[#E8DFC9] uppercase">
-              <span className="bg-[#2D3E27] px-4 py-0.5 rounded shadow-xs border border-[#43593B]">EDUCATION</span>
-              <span className="bg-[#8A522A] px-4 py-0.5 rounded shadow-xs border border-[#A66637]">LEADERSHIP</span>
-              <span className="bg-[#243320] px-4 py-0.5 rounded shadow-xs border border-[#3C5035]">KVS</span>
+            <div className="pt-2">
+              <button
+                onClick={() => onNavigate("quizzes")}
+                className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-[#E5F1E9] hover:bg-[#D5E8DC] text-[#11382B] text-xs sm:text-sm font-bold shadow-md transition transform hover:-translate-y-0.5 cursor-pointer"
+              >
+                <span>Start Practicing</span>
+                <ArrowRight className="w-4 h-4 text-[#11382B]" />
+              </button>
             </div>
           </div>
 
-          {/* Carousel dots */}
-          <div className="mt-6 flex items-center justify-end gap-2">
-            {heroSlides.map((_, i) => (
-              <span
-                key={i}
-                onClick={() => setHeroSlide(i)}
-                className={`w-2.5 h-2.5 rounded-full cursor-pointer transition ${
-                  heroSlide === i ? "bg-[#3c4f2e] scale-125" : "bg-[#8a7f66]/50"
-                }`}
-              ></span>
-            ))}
+          {/* Right: Quote Box with Abdul Kalam citation & slider dots */}
+          <div className="max-w-xs lg:max-w-sm ml-auto text-left lg:text-right bg-[#11382B]/60 lg:bg-transparent backdrop-blur-xs p-4 lg:p-0 rounded-2xl lg:rounded-none border lg:border-none border-white/10 space-y-3">
+            <div className="text-3xl text-[#96C3A8]/80 font-serif leading-none lg:text-right">“</div>
+            <p className="italic font-serif text-slate-100 text-xs sm:text-sm leading-relaxed">
+              "{currentHero.quote}"
+            </p>
+            <p className="text-[11px] text-[#A6CDB6] font-medium">
+              — {currentHero.author}
+            </p>
+
+            {/* Carousel navigation dots */}
+            <div className="flex items-center lg:justify-end gap-2 pt-2">
+              {heroSlides.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setHeroSlide(idx)}
+                  className={`w-2.5 h-2.5 rounded-full transition-all cursor-pointer ${
+                    heroSlide === idx
+                      ? "bg-[#E5F1E9] w-6"
+                      : "bg-white/40 hover:bg-white/70"
+                  }`}
+                  aria-label={`Slide ${idx + 1}`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 2. Quick Access Heading with horizontal dividing line */}
-      <div className="flex items-center gap-3">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="#4a5f36" className="shrink-0">
-          <path d="M12 22C12 22 12 16 17 11C20.5 7.5 22 4 22 4C22 4 18.5 5.5 15 9C12 12.5 12 18 12 18Z" />
-          <path d="M12 22C12 22 12 16 7 11C3.5 7.5 2 4 2 4C2 4 5.5 5.5 9 9C12 12.5 12 18 12 18Z" />
-        </svg>
-        <h3 className="text-2xl text-[#2f3b26] font-serif-title font-medium whitespace-nowrap">
-          Quick Access
-        </h3>
-        <div className="h-[1px] w-full bg-[#D5CBB4] ml-2"></div>
-      </div>
-
-      {/* 3. Main Grid: 4 Quick Access Cards on Left + Announcements Panel on Right */}
-      <section className="grid gap-6 lg:grid-cols-12 items-start">
-        {/* Left Column (8 cols): 4 Cards */}
-        <div className="lg:col-span-8 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
-          {[
-            {
-              title: "Study Resources",
-              desc: "Access all study materials and important documents.",
-              page: "resources" as Page,
-              bg: "bg-[#DFE5D5]",
-              border: "border-[#C0CCB1]",
-              badgeBg: "bg-[#3c4e2e]",
-              btnBg: "bg-[#4a5f36] hover:bg-[#344525]",
-              icon: (
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>
-                </svg>
-              ),
-              bottomGraphic: (
-                <svg className="w-28 h-20 text-[#2F3D28] opacity-15" viewBox="0 0 100 60" fill="currentColor">
-                  <rect x="10" y="38" width="80" height="14" rx="2" />
-                  <rect x="15" y="24" width="70" height="12" rx="2" />
-                  <rect x="22" y="12" width="56" height="10" rx="2" />
-                </svg>
-              )
-            },
-            {
-              title: "Practice Quizzes",
-              desc: "Topic-wise quizzes to check your preparation.",
-              page: "quizzes" as Page,
-              bg: "bg-[#F0E6D2]",
-              border: "border-[#DBC8A8]",
-              badgeBg: "bg-[#9c5a30]",
-              btnBg: "bg-[#a25b33] hover:bg-[#864825]",
-              icon: (
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
-                  <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
-                  <path d="M9 12h6m-6 4h6m-6-8h2"/>
-                </svg>
-              ),
-              bottomGraphic: (
-                <svg className="w-28 h-20 text-[#8C522A] opacity-15" viewBox="0 0 100 60" fill="none" stroke="currentColor" strokeWidth="2">
-                  <rect x="20" y="10" width="60" height="40" rx="3" />
-                  <line x1="28" y1="20" x2="60" y2="20" />
-                  <line x1="28" y1="28" x2="68" y2="28" />
-                  <line x1="28" y1="36" x2="52" y2="36" />
-                </svg>
-              )
-            },
-            {
-              title: "Doubt Discussion",
-              desc: "Ask questions and get help from fellow teachers.",
-              page: "discussion" as Page,
-              bg: "bg-[#DFE5D5]",
-              border: "border-[#C0CCB1]",
-              badgeBg: "bg-[#3c4e2e]",
-              btnBg: "bg-[#4a5f36] hover:bg-[#344525]",
-              icon: (
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                  <circle cx="9" cy="10" r="1"/>
-                  <circle cx="12" cy="10" r="1"/>
-                  <circle cx="15" cy="10" r="1"/>
-                </svg>
-              ),
-              bottomGraphic: (
-                <svg className="w-28 h-20 text-[#2F3D28] opacity-15" viewBox="0 0 100 60" fill="currentColor">
-                  <circle cx="35" cy="25" r="10"/>
-                  <circle cx="65" cy="25" r="10"/>
-                  <path d="M20 50c0-8 7-15 15-15s15 7 15 15z" />
-                  <path d="M50 50c0-8 7-15 15-15s15 7 15 15z" />
-                </svg>
-              )
-            },
-            {
-              title: "Announcements",
-              desc: "Important updates and notifications.",
-              page: "announcements" as Page,
-              bg: "bg-[#F0E6D2]",
-              border: "border-[#DBC8A8]",
-              badgeBg: "bg-[#9c5a30]",
-              btnBg: "bg-[#a25b33] hover:bg-[#864825]",
-              icon: (
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-                  <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-                </svg>
-              ),
-              bottomGraphic: (
-                <svg className="w-28 h-20 text-[#8C522A] opacity-15" viewBox="0 0 100 60" fill="currentColor">
-                  <path d="M20 25h12l25-15v40L32 35H20z" />
-                  <path d="M65 20a15 15 0 0 1 0 20" stroke="currentColor" strokeWidth="3" fill="none"/>
-                </svg>
-              )
-            }
-          ].map((card) => (
-            <div
-              key={card.title}
-              className={`rounded-2xl border ${card.border} ${card.bg} p-5 flex flex-col items-center text-center shadow-xs relative overflow-hidden h-full min-h-[340px] transition hover:-translate-y-1`}
-            >
-              <div className={`h-14 w-14 mb-4 rounded-full ${card.badgeBg} flex items-center justify-center text-[#F2ECD8] shadow-sm z-10`}>
-                {card.icon}
-              </div>
-
-              <h4 className="text-lg font-bold font-serif-title text-[#25301d] mb-2 z-10">
-                {card.title}
-              </h4>
-
-              <p className="text-xs leading-relaxed text-[#5a5040] mb-6 flex-1 z-10">
-                {card.desc}
-              </p>
-
-              <button
-                onClick={() => onNavigate(card.page)}
-                className={`rounded-full ${card.btnBg} px-6 py-2 text-xs font-semibold text-[#F2ECD8] transition z-10 shadow-xs cursor-pointer`}
-              >
-                Go to &rarr;
-              </button>
-
-              {/* Bottom decorative graphic */}
-              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 pointer-events-none">
-                {card.bottomGraphic}
-              </div>
+      {/* 2. Quick Access Section (Exact replica of Image 1) */}
+      <section className="space-y-4">
+        {/* Section Header */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <div className="text-[#11382B]">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-5 h-5">
+                <path d="M19.5 4.5C19.5 4.5 15 5 11 9C7 13 6 18 6 18C6 18 11 17 15 13C19 9 19.5 4.5 19.5 4.5Z" fill="#11382B" />
+              </svg>
             </div>
-          ))}
+            <div>
+              <h2 className="text-xl sm:text-2xl font-bold font-serif-title text-[#142D21]">
+                Quick Access
+              </h2>
+            </div>
+            <span className="hidden sm:inline text-xs sm:text-sm text-[#6C7E74] ml-2">
+              Everything you need, all in one place
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            {onOpenPracticeMore && (
+              <button
+                onClick={onOpenPracticeMore}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#EAF3EC] hover:bg-[#D5EADB] text-[#11382B] text-xs font-bold border border-[#C5D9CB] transition shadow-2xs cursor-pointer"
+              >
+                <FolderOpen className="w-3.5 h-3.5 text-[#11382B]" />
+                <span>Practice More (Drive)</span>
+              </button>
+            )}
+            <button
+              onClick={() => onNavigate("resources")}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[#D5DDD6] bg-white text-xs font-semibold text-[#3C5245] hover:bg-[#F3F7F4] transition shadow-2xs cursor-pointer"
+            >
+              <span>View All</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
         </div>
 
-        {/* Right Column (4 cols): Latest Announcement & Quote */}
-        <div className="lg:col-span-4 space-y-5 flex flex-col h-full">
-          {/* Announcement Card */}
-          <div className="space-y-2">
-            <div className="flex items-center gap-2 text-[#2f3b26]">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-              </svg>
-              <h4 className="text-lg font-serif-title font-medium">Latest Announcement</h4>
+        {/* Grid: 5 Pastel Cards (Left 8 cols) + 2 Right Widgets (Right 4 cols) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+          {/* Left: 5 Pastel Quick Access Cards */}
+          <div className="lg:col-span-8 grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-3.5">
+            {/* Card 1: Study Resources */}
+            <div
+              onClick={() => onNavigate("resources")}
+              className="group p-4 rounded-2xl bg-[#EAF2EC] border border-[#D3E4D7] flex flex-col justify-between transition hover:-translate-y-1 hover:shadow-md cursor-pointer min-h-[190px]"
+            >
+              <div>
+                <div className="w-10 h-10 rounded-full bg-[#11382B] text-white flex items-center justify-center shadow-xs mb-3 group-hover:scale-105 transition">
+                  <BookOpen className="w-5 h-5 text-white" />
+                </div>
+                <h3 className="text-sm font-bold font-serif-title text-[#142D21] mb-1">
+                  Study Resources
+                </h3>
+                <p className="text-[11px] text-[#4F6859] leading-relaxed">
+                  Access all study materials and important documents.
+                </p>
+              </div>
+
+              <div className="pt-3">
+                <span className="w-7 h-7 rounded-full bg-[#11382B] text-white flex items-center justify-center group-hover:bg-[#1E4D3B] transition shadow-2xs">
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </span>
+              </div>
             </div>
 
-            {!announcementDismissed ? (
-              <div className="rounded-xl border border-[#D5CBB4] bg-[#F2ECD8] p-5 shadow-xs relative">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-[#cc5141] inline-block animate-pulse"></span>
-                    <span className="bg-[#cc5141] text-white text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-sm">
-                      New
+            {/* Card 2: Practice Quizzes */}
+            <div
+              onClick={() => onNavigate("quizzes")}
+              className="group p-4 rounded-2xl bg-[#FBF1EB] border border-[#F2DDD2] flex flex-col justify-between transition hover:-translate-y-1 hover:shadow-md cursor-pointer min-h-[190px]"
+            >
+              <div>
+                <div className="w-10 h-10 rounded-full bg-[#A2573B] text-white flex items-center justify-center shadow-xs mb-3 group-hover:scale-105 transition">
+                  <FileQuestion className="w-5 h-5 text-white" />
+                </div>
+                <h3 className="text-sm font-bold font-serif-title text-[#331C14] mb-1">
+                  Practice Quizzes
+                </h3>
+                <p className="text-[11px] text-[#784A3A] leading-relaxed">
+                  Topic-wise quizzes to check your preparation.
+                </p>
+              </div>
+
+              <div className="pt-3">
+                <span className="w-7 h-7 rounded-full bg-[#A2573B] text-white flex items-center justify-center group-hover:bg-[#8C462D] transition shadow-2xs">
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </span>
+              </div>
+            </div>
+
+            {/* Card 3: Doubt Discussion */}
+            <div
+              onClick={() => onNavigate("discussion")}
+              className="group p-4 rounded-2xl bg-[#EAF1F8] border border-[#D1E1F0] flex flex-col justify-between transition hover:-translate-y-1 hover:shadow-md cursor-pointer min-h-[190px]"
+            >
+              <div>
+                <div className="w-10 h-10 rounded-full bg-[#2A6A9E] text-white flex items-center justify-center shadow-xs mb-3 group-hover:scale-105 transition">
+                  <MessageSquare className="w-5 h-5 text-white" />
+                </div>
+                <h3 className="text-sm font-bold font-serif-title text-[#142838] mb-1">
+                  Doubt Discussion
+                </h3>
+                <p className="text-[11px] text-[#45647F] leading-relaxed">
+                  Ask questions and get help from fellow teachers.
+                </p>
+              </div>
+
+              <div className="pt-3">
+                <span className="w-7 h-7 rounded-full bg-[#2A6A9E] text-white flex items-center justify-center group-hover:bg-[#1E527D] transition shadow-2xs">
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </span>
+              </div>
+            </div>
+
+            {/* Card 4: Announcements */}
+            <div
+              onClick={() => onNavigate("announcements")}
+              className="group p-4 rounded-2xl bg-[#EFEBF8] border border-[#DFD6F2] flex flex-col justify-between transition hover:-translate-y-1 hover:shadow-md cursor-pointer min-h-[190px] relative"
+            >
+              <div>
+                <div className="relative inline-block mb-3">
+                  <div className="w-10 h-10 rounded-full bg-[#6B52A3] text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition">
+                    <Bell className="w-5 h-5 text-white" />
+                  </div>
+                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#D34537] text-white text-[9px] font-bold flex items-center justify-center">
+                    3
+                  </span>
+                </div>
+                <h3 className="text-sm font-bold font-serif-title text-[#261A3B] mb-1">
+                  Announcements
+                </h3>
+                <p className="text-[11px] text-[#635182] leading-relaxed">
+                  Important updates and notifications.
+                </p>
+              </div>
+
+              <div className="pt-3">
+                <span className="w-7 h-7 rounded-full bg-[#6B52A3] text-white flex items-center justify-center group-hover:bg-[#563E87] transition shadow-2xs">
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </span>
+              </div>
+            </div>
+
+            {/* Card 5: Exam Pattern */}
+            <div
+              onClick={() => onNavigate("syllabus")}
+              className="group p-4 rounded-2xl bg-[#F9EFE6] border border-[#F0DBC9] flex flex-col justify-between transition hover:-translate-y-1 hover:shadow-md cursor-pointer min-h-[190px]"
+            >
+              <div>
+                <div className="w-10 h-10 rounded-full bg-[#996530] text-white flex items-center justify-center shadow-xs mb-3 group-hover:scale-105 transition">
+                  <Calendar className="w-5 h-5 text-white" />
+                </div>
+                <h3 className="text-sm font-bold font-serif-title text-[#332210] mb-1">
+                  Exam Pattern
+                </h3>
+                <p className="text-[11px] text-[#78542F] leading-relaxed">
+                  Know the latest exam structure and syllabus.
+                </p>
+              </div>
+
+              <div className="pt-3">
+                <span className="w-7 h-7 rounded-full bg-[#996530] text-white flex items-center justify-center group-hover:bg-[#7D4F1E] transition shadow-2xs">
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right: Stacked Widgets (Days Left + Latest Announcement) */}
+          <div className="lg:col-span-4 flex flex-col justify-between gap-3.5">
+            {/* Widget 1: Days Left */}
+            <div className="rounded-2xl bg-[#11382B] text-white p-4 sm:p-5 flex items-center justify-between shadow-xs border border-[#1E4D3B]/50">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center border border-white/20 text-[#A6CDB6]">
+                  <Calendar className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="text-sm font-bold text-white leading-tight font-serif-title">
+                    Days Left
+                  </p>
+                  <p className="text-[11px] text-[#A6CDB6] mt-0.5">
+                    Target Administrative Exam
+                  </p>
+                </div>
+              </div>
+
+              {/* Big Countdown Box */}
+              <div className="px-4 py-2 rounded-xl bg-white/10 border border-white/20 text-center min-w-[70px]">
+                <p className="text-2xl font-bold font-serif-title leading-none text-white">
+                  42
+                </p>
+                <p className="text-[9px] uppercase tracking-widest text-[#A6CDB6] font-bold mt-0.5">
+                  DAYS
+                </p>
+              </div>
+            </div>
+
+            {/* Widget 2: Interactive Practice MCQs Hub (Replaces preloaded alert) */}
+            <div className="rounded-2xl bg-white border border-[#E2E8E2] p-4 sm:p-5 shadow-xs flex-1 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <Sparkles className="w-4 h-4 text-amber-500" />
+                  <span className="text-xs font-bold text-[#142D21]">Interactive Practice MCQs</span>
+                </div>
+
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span className="px-1.5 py-0.5 rounded bg-[#11382B] text-white text-[9px] font-bold tracking-wider">
+                    51 MCQs
+                  </span>
+                  <h4 className="text-xs sm:text-sm font-bold font-serif-title text-[#142D21]">
+                    CSMoP & Office Procedure
+                  </h4>
+                </div>
+
+                <p className="text-[11px] text-[#55695E] leading-relaxed">
+                  Full in-site CBT practice test covering Central Secretariat filing, dak, noting, drafting, and e-Office rules with instant explanations.
+                </p>
+              </div>
+
+              <div className="pt-3 mt-3 border-t border-[#EDF2EE] flex items-center justify-between text-[11px]">
+                <span className="text-[#11382B] font-semibold flex items-center gap-1">
+                  100% Free Practice
+                </span>
+
+                <button
+                  onClick={() => onNavigate("quizzes")}
+                  className="font-bold text-[#11382B] hover:underline flex items-center gap-1 cursor-pointer"
+                >
+                  <span>Start Test</span>
+                  <ArrowRight className="w-3 h-3" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. All 10 Subject Quizzes & Practice Tests (10 Topics) */}
+      <section className="space-y-5">
+        {/* Section Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#EAF3EC] text-[#11382B] text-[10px] font-bold uppercase tracking-wider border border-[#C6DC CE]">
+                <Sparkles className="w-3 h-3 text-amber-500" />
+                10 Subject Quizzes & Tests
+              </span>
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            </div>
+            <h2 className="text-xl sm:text-2xl font-bold font-serif-title text-[#142D21]">
+              Subject Practice Quizzes & Topic Tests
+            </h2>
+            <p className="text-xs sm:text-sm text-[#55695E]">
+              Interactive practice quizzes, mock question papers, and question banks across all 10 examination topics.
+            </p>
+          </div>
+
+          {onOpenPracticeMore && (
+            <button
+              onClick={onOpenPracticeMore}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#11382B] hover:bg-[#1A4B37] text-white text-xs font-bold transition shadow-xs cursor-pointer self-start sm:self-auto"
+            >
+              <FolderOpen className="w-4 h-4 text-amber-300" />
+              <span>Browse All 10 Quizzes</span>
+              <ExternalLink className="w-3.5 h-3.5" />
+            </button>
+          )}
+        </div>
+
+        {/* 10 Topic Quizzes Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3.5">
+          {practiceDriveTopics.map((item) => {
+            const isOfficeProcedure = item.id === 8;
+            return (
+              <div
+                key={item.id}
+                className="p-4 rounded-2xl bg-white border border-[#E2E8E2] hover:border-[#11382B] shadow-2xs hover:shadow-md transition flex flex-col justify-between group"
+              >
+                <div className="space-y-2.5">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-mono font-bold text-[#11382B] bg-[#EAF3EC] px-2 py-0.5 rounded-md border border-[#D0E2D5]">
+                      #{String(item.id).padStart(2, "0")}
+                    </span>
+                    <span className="text-[10px] uppercase font-bold tracking-wider text-[#6C7E74] truncate max-w-[120px]">
+                      {item.category}
                     </span>
                   </div>
-                  <button
-                    onClick={() => setAnnouncementDismissed(true)}
-                    className="text-[#8b7e66] hover:text-[#2f3b26] text-sm"
-                    aria-label="Dismiss notice"
-                  >
-                    ✕
-                  </button>
+
+                  <h3 className="text-sm font-bold font-serif-title text-[#142D21] group-hover:text-[#11382B] transition line-clamp-2">
+                    {item.title}
+                  </h3>
+
+                  <p className="text-xs text-[#55695E] leading-relaxed line-clamp-3">
+                    {item.description}
+                  </p>
                 </div>
 
-                <h5 className="text-base font-bold font-serif-title text-[#2f3b26] mt-2 leading-tight">
-                  Mock Test Schedule Updated
-                </h5>
-
-                <p className="mt-2 text-xs text-[#5a5040] leading-relaxed">
-                  The topic-wise mock test for Leadership and Educational Management is now available. Please check the Practice Quizzes section.
-                </p>
-
-                <div className="mt-4 pt-4 border-t border-[#D5CBB4] flex items-center justify-between text-xs text-[#7e725d]">
-                  <span className="flex items-center gap-1.5">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                      <line x1="16" y1="2" x2="16" y2="6"></line>
-                      <line x1="8" y1="2" x2="8" y2="6"></line>
-                      <line x1="3" y1="10" x2="21" y2="10"></line>
-                    </svg>
-                    12 Oct 2025
-                  </span>
-                  <button
-                    onClick={() => onNavigate("announcements")}
-                    className="text-[#4a5f36] font-semibold hover:underline"
+                <div className="pt-3 mt-3 border-t border-[#EDF2EE] space-y-2">
+                  <a
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full py-2 px-3 rounded-xl bg-[#F4F6F2] hover:bg-[#11382B] group-hover:bg-[#11382B] text-[#11382B] group-hover:text-white text-xs font-bold transition flex items-center justify-center gap-1.5 border border-[#DDE4DF]"
                   >
-                    View All &rarr;
-                  </button>
+                    <span>Start Topic Quiz</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+
+                  {isOfficeProcedure && (
+                    <button
+                      onClick={() => onNavigate("quizzes")}
+                      className="w-full py-1.5 px-2 rounded-lg bg-[#EAF3EC] hover:bg-[#D5EADB] text-[#11382B] text-[11px] font-bold transition flex items-center justify-center gap-1 cursor-pointer"
+                    >
+                      <Sparkles className="w-3 h-3 text-amber-500" />
+                      <span>Take 51 In-Site MCQs</span>
+                    </button>
+                  )}
                 </div>
               </div>
-            ) : (
-              <div className="rounded-xl border border-[#D5CBB4] bg-[#F2ECD8] p-4 text-xs text-[#6e634f]">
-                No new unread bulletins. Click to browse{" "}
-                <button onClick={() => onNavigate("announcements")} className="text-[#3c4e2e] underline font-bold">
-                  all circulars
-                </button>.
-              </div>
-            )}
+            );
+          })}
+        </div>
+      </section>
+
+      {/* 4. Examination Scheme & Official Blueprint (150 Marks) */}
+      <section className="space-y-4 pt-2">
+        <div className="flex items-center justify-between">
+          <div className="space-y-0.5">
+            <h2 className="text-xl sm:text-2xl font-bold font-serif-title text-[#142D21] flex items-center gap-2">
+              <Award className="w-5 h-5 text-[#11382B]" />
+              <span>Official Administrative Examination Blueprint (150 Marks)</span>
+            </h2>
+            <p className="text-xs sm:text-sm text-[#55695E]">
+              Total 150 Objective Type Questions • 150 Marks • Duration: 180 Minutes (Computer Based Test)
+            </p>
           </div>
 
-          {/* Inspirational Education Quote Box */}
-          <div className="rounded-xl bg-gradient-to-br from-[#DFE5D5] to-[#EAE2C8] border border-[#C6D1B9] p-6 shadow-xs flex-1 flex flex-col justify-center">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="#586b47" className="mb-2">
-              <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
-              <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-            </svg>
-            <p className="italic font-serif text-[#374728] text-sm leading-relaxed">
-              "The function of education is to teach one to think intensively and to think critically."
-            </p>
-            <p className="mt-3 text-xs text-[#5a5040] font-serif">
-              &mdash; Martin Luther King Jr.
+          <button
+            onClick={() => onNavigate("syllabus")}
+            className="hidden sm:inline-flex items-center gap-1.5 text-xs font-bold text-[#11382B] hover:underline cursor-pointer"
+          >
+            <span>Full Syllabus Breakdown</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+
+        {/* 4 Blueprint Part Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* Part I */}
+          <div className="p-4.5 rounded-2xl bg-white border border-[#E2E8E2] shadow-2xs space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="px-2.5 py-0.5 rounded-full bg-[#EAF1F8] text-[#2A6A9E] text-xs font-bold">
+                Part I • 30 Marks
+              </span>
+              <span className="text-xs font-bold text-[#142D21]">30 Qs</span>
+            </div>
+            <h3 className="text-sm font-bold font-serif-title text-[#142D21]">
+              Proficiency in Languages
+            </h3>
+            <ul className="text-xs text-[#55695E] space-y-1">
+              <li className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                <span>General English (15 Marks)</span>
+              </li>
+              <li className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                <span>General Hindi (15 Marks)</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Part II */}
+          <div className="p-4.5 rounded-2xl bg-white border border-[#E2E8E2] shadow-2xs space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="px-2.5 py-0.5 rounded-full bg-[#FBF1EB] text-[#A2573B] text-xs font-bold">
+                Part II • 20 Marks
+              </span>
+              <span className="text-xs font-bold text-[#142D21]">20 Qs</span>
+            </div>
+            <h3 className="text-sm font-bold font-serif-title text-[#142D21]">
+              General Awareness & Reasoning
+            </h3>
+            <ul className="text-xs text-[#55695E] space-y-1">
+              <li className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                <span>General Knowledge & Current Affairs (10)</span>
+              </li>
+              <li className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                <span>Reasoning & Computer Literacy (10)</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Part III */}
+          <div className="p-4.5 rounded-2xl bg-white border border-[#E2E8E2] shadow-2xs space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="px-2.5 py-0.5 rounded-full bg-[#EAF3EC] text-[#11382B] text-xs font-bold">
+                Part III • 50 Marks
+              </span>
+              <span className="text-xs font-bold text-[#11382B]">50 Qs</span>
+            </div>
+            <h3 className="text-sm font-bold font-serif-title text-[#142D21]">
+              Perspectives on Education
+            </h3>
+            <ul className="text-xs text-[#55695E] space-y-1">
+              <li className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                <span>Understanding the Learner & Teaching</span>
+              </li>
+              <li className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                <span>NEP 2020 & School Leadership</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Part IV */}
+          <div className="p-4.5 rounded-2xl bg-white border border-[#E2E8E2] shadow-2xs space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="px-2.5 py-0.5 rounded-full bg-[#EFEBF8] text-[#6B52A3] text-xs font-bold">
+                Part IV • 50 Marks
+              </span>
+              <span className="text-xs font-bold text-[#6B52A3]">50 Qs</span>
+            </div>
+            <h3 className="text-sm font-bold font-serif-title text-[#142D21]">
+              Administration & Finance
+            </h3>
+            <ul className="text-xs text-[#55695E] space-y-1">
+              <li className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                <span>CSMoP & Office Procedure Rules</span>
+              </li>
+              <li className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                <span>GFR 2017, GeM & CCS Conduct Rules</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* CTA Banner */}
+        <div className="p-4 sm:p-5 rounded-2xl bg-[#11382B] text-white flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="space-y-1 text-center sm:text-left">
+            <h3 className="text-base sm:text-lg font-bold font-serif-title">
+              Ready to test your knowledge on Administration & Office Procedure?
+            </h3>
+            <p className="text-xs text-[#C5E0D0]">
+              51 practice questions with instant answers, official manual references, and statutory explanations.
             </p>
           </div>
+
+          <button
+            onClick={() => onNavigate("quizzes")}
+            className="px-5 py-2.5 rounded-xl bg-white hover:bg-[#F3F7F4] text-[#11382B] text-xs font-bold transition shadow-sm cursor-pointer whitespace-nowrap flex items-center gap-2"
+          >
+            <span>Start Practice Quiz Now</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
         </div>
       </section>
     </div>

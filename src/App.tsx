@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Page, ResourceItem, Question, DiscussionThread, DiscussionReply, Announcement, AdminUser, ActivityLog } from "./data/types";
 import { starterResources } from "./data/resources";
 import { starterQuestions } from "./data/questions";
@@ -15,31 +15,39 @@ import { DiscussionView } from "./components/DiscussionView";
 import { AnnouncementsView } from "./components/AnnouncementsView";
 import { AdminView } from "./components/AdminView";
 import { Footer } from "./components/Footer";
+import { PracticeMoreDrawer } from "./components/PracticeMoreDrawer";
 
 const STORE_KEYS = {
-  participantId: "kvs_participant_id",
-  participantName: "kvs_participant_name",
-  participantDesignation: "kvs_participant_designation",
-  participantRegion: "kvs_participant_region",
-  resources: "kvs_resources_v2",
-  questions: "kvs_questions_v2",
-  threads: "kvs_threads_v2",
-  replies: "kvs_replies_v2",
-  announcements: "kvs_announcements_v2",
-  dismissals: "kvs_dismissals_v2",
-  savedResources: "kvs_saved_resources_v2",
-  completedQuizzes: "kvs_completed_quizzes_v2",
-  admins: "kvs_admins_v2",
-  logs: "kvs_logs_v2",
+  participantId: "exam_participant_id_v3",
+  participantName: "exam_participant_name_v3",
+  participantDesignation: "exam_participant_designation_v3",
+  participantRegion: "exam_participant_region_v3",
+  resources: "exam_resources_v3",
+  questions: "exam_questions_v3",
+  threads: "exam_threads_v3",
+  replies: "exam_replies_v3",
+  announcements: "exam_announcements_v3",
+  dismissals: "exam_dismissals_v3",
+  savedResources: "exam_saved_resources_v3",
+  completedQuizzes: "exam_completed_quizzes_v3",
+  admins: "exam_admins_v3",
+  logs: "exam_logs_v3",
 };
 
 const defaultAdmins: AdminUser[] = [
   {
     id: "admin-1",
-    name: "Lead Academic Administrator",
-    email: "admin@kvs.local",
+    name: "Examination Administrator",
+    email: "admin@examportal.local",
     role: "super_admin",
-    password: "kvsadmin"
+    password: "adminpassword"
+  },
+  {
+    id: "admin-2",
+    name: "Administrative Desk",
+    email: "desk@examportal.local",
+    role: "super_admin",
+    password: "deskpassword"
   }
 ];
 
@@ -67,23 +75,24 @@ function uid(prefix: string) {
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<Page>("dashboard");
+  const [isPracticeMoreOpen, setIsPracticeMoreOpen] = useState(false);
 
-  // Participant Profile State
+  // Participant Profile State (Defaults to Harsh as in the design)
   const [participantId, setParticipantId] = useState<string>(
-    () => localStorage.getItem(STORE_KEYS.participantId) || ""
+    () => localStorage.getItem(STORE_KEYS.participantId) || "participant-harsh"
   );
   const [educatorName, setEducatorName] = useState<string>(
-    () => localStorage.getItem(STORE_KEYS.participantName) || ""
+    () => localStorage.getItem(STORE_KEYS.participantName) || "Harsh"
   );
   const [educatorDesignation, setEducatorDesignation] = useState<string>(
-    () => localStorage.getItem(STORE_KEYS.participantDesignation) || "Vice Principal (Promotional Aspirant)"
+    () => localStorage.getItem(STORE_KEYS.participantDesignation) || "Administrative Officer (Aspirant)"
   );
   const [educatorRegion, setEducatorRegion] = useState<string>(
-    () => localStorage.getItem(STORE_KEYS.participantRegion) || "Delhi Region"
+    () => localStorage.getItem(STORE_KEYS.participantRegion) || "National Cadre"
   );
 
   // Core Data State
-  const [resources, setResources] = useState<ResourceItem[]>(
+  const [resources] = useState<ResourceItem[]>(
     () => readJSON(STORE_KEYS.resources, starterResources)
   );
   const [questions, setQuestions] = useState<Question[]>(
@@ -109,7 +118,7 @@ export default function App() {
   );
 
   // Admin State
-  const [admins, setAdmins] = useState<AdminUser[]>(
+  const [admins] = useState<AdminUser[]>(
     () => readJSON(STORE_KEYS.admins, defaultAdmins)
   );
   const [activeAdmin, setActiveAdmin] = useState<AdminUser | null>(null);
@@ -121,7 +130,7 @@ export default function App() {
   useEffect(() => {
     let channel: BroadcastChannel | null = null;
     try {
-      channel = new BroadcastChannel("kvs-live-updates");
+      channel = new BroadcastChannel("upsc-live-updates");
       channel.onmessage = (event) => {
         if (event.data === "threads") {
           setThreads(readJSON(STORE_KEYS.threads, starterThreads));
@@ -147,15 +156,15 @@ export default function App() {
   useEffect(() => { saveJSON(STORE_KEYS.questions, questions); }, [questions]);
   useEffect(() => { 
     saveJSON(STORE_KEYS.threads, threads); 
-    try { new BroadcastChannel("kvs-live-updates").postMessage("threads"); } catch {}
+    try { new BroadcastChannel("upsc-live-updates").postMessage("threads"); } catch {}
   }, [threads]);
   useEffect(() => { 
     saveJSON(STORE_KEYS.replies, replies); 
-    try { new BroadcastChannel("kvs-live-updates").postMessage("replies"); } catch {}
+    try { new BroadcastChannel("upsc-live-updates").postMessage("replies"); } catch {}
   }, [replies]);
   useEffect(() => { 
     saveJSON(STORE_KEYS.announcements, announcements); 
-    try { new BroadcastChannel("kvs-live-updates").postMessage("announcements"); } catch {}
+    try { new BroadcastChannel("upsc-live-updates").postMessage("announcements"); } catch {}
   }, [announcements]);
   useEffect(() => { saveJSON(STORE_KEYS.savedResources, savedResourceIds); }, [savedResourceIds]);
   useEffect(() => { saveJSON(STORE_KEYS.completedQuizzes, completedQuizzes); }, [completedQuizzes]);
@@ -338,6 +347,7 @@ export default function App() {
         unreadAnnouncementsCount={unreadAnnouncementsCount}
         onSignOut={handleSignOut}
         savedResourcesCount={savedResourceIds.length}
+        onOpenPracticeMore={() => setIsPracticeMoreOpen(true)}
       />
 
       {/* Main View Router */}
@@ -353,6 +363,7 @@ export default function App() {
             questions={questions}
             savedResourcesCount={savedResourceIds.length}
             completedQuizzesCount={completedQuizzes.length}
+            onOpenPracticeMore={() => setIsPracticeMoreOpen(true)}
           />
         )}
 
@@ -372,6 +383,8 @@ export default function App() {
           <QuizView
             questions={questions}
             onQuizComplete={handleQuizComplete}
+            onNavigate={setCurrentPage}
+            onOpenPracticeMore={() => setIsPracticeMoreOpen(true)}
           />
         )}
 
@@ -418,6 +431,12 @@ export default function App() {
 
       {/* Prestigious Institutional Footer */}
       <Footer onNavigate={setCurrentPage} />
+
+      {/* Slide-over Practice More Google Drive Library Drawer */}
+      <PracticeMoreDrawer
+        isOpen={isPracticeMoreOpen}
+        onClose={() => setIsPracticeMoreOpen(false)}
+      />
     </div>
   );
 }

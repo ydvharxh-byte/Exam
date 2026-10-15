@@ -8,30 +8,38 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   return (
-    <footer className="mt-auto border-t border-[#3c4e2e] bg-[#263520] text-[#D8D2C4] py-6 px-4 md:px-8">
-      <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-4">
+    <footer className="mt-auto border-t border-[#E2E8E2] bg-white text-[#55695E] py-5 px-4 md:px-8">
+      <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-3 text-xs">
         {/* Left text */}
-        <div className="text-xs sm:text-sm text-[#CDC6B5]">
-          KVS Principal Exam Preparation <span className="mx-2 text-[#7f9270] opacity-60">|</span> Study <span className="mx-1">•</span> Practice <span className="mx-1">•</span> Succeed
-        </div>
-
-        {/* Center Leaf Motif */}
-        <div className="text-[#8FA57E]">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 22C12 22 12 16 17 11C20.5 7.5 22 4 22 4C22 4 18.5 5.5 15 9C12 12.5 12 18 12 18Z" />
-            <path d="M12 22C12 22 12 16 7 11C3.5 7.5 2 4 2 4C2 4 5.5 5.5 9 9C12 12.5 12 18 12 18Z" />
-          </svg>
-        </div>
-
-        {/* Right Italic Motto */}
-        <div className="flex items-center gap-4 text-xs sm:text-sm">
-          <span className="italic font-serif text-[#E2DCce]">
-            Together Towards Better Education
+        <div className="flex items-center gap-2">
+          <span className="font-semibold text-[#142D21]">
+            Administrative Examination Portal
           </span>
+          <span className="text-[#C5D2C9]">|</span>
+          <span className="text-[#6C7E74]">
+            Empowering Leadership. Building Good Governance.
+          </span>
+        </div>
+
+        {/* Right Quote & Botanical Leaf & Admin access */}
+        <div className="flex items-center gap-4">
+          <span className="italic font-serif text-[#4A5E52] hidden sm:inline">
+            "Integrity, efficiency, and dedication build a stronger nation."
+          </span>
+
+          <div className="text-[#11382B]" title="Administrative Excellence">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-4 h-4">
+              <path
+                d="M19.5 4.5C19.5 4.5 15 5 11 9C7 13 6 18 6 18C6 18 11 17 15 13C19 9 19.5 4.5 19.5 4.5Z"
+                fill="#11382B"
+              />
+            </svg>
+          </div>
+
           <button
             onClick={() => onNavigate("admin")}
-            className="text-[#9DB28C] hover:text-[#E2DCCE] transition flex items-center gap-1 text-[11px]"
-            title="Admin Desk"
+            className="text-[#889B90] hover:text-[#11382B] transition flex items-center gap-1 text-[11px] px-2 py-0.5 rounded border border-[#E2E8E2] hover:border-[#11382B] cursor-pointer"
+            title="Administrative Desk"
           >
             <ShieldCheck className="w-3 h-3" />
             <span>Admin</span>

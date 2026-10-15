@@ -48,17 +48,17 @@ export const ResourcesView: React.FC<ResourcesViewProps> = ({
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       {/* Header with Google Drive Folder Quick Access */}
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-[#D5CBB4] pb-5">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-[#E2E8E2] pb-5">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#DFE5D5] text-[#2F3D28] text-xs font-semibold mb-2 border border-[#C0CCB1]">
-            <BookOpen className="w-3.5 h-3.5 text-[#3c4e2e]" />
-            <span>Digital Repository • Google Drive Integration</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EAF3EC] text-[#11382B] text-xs font-semibold mb-2 border border-[#C5D9CB]">
+            <BookOpen className="w-3.5 h-3.5 text-[#11382B]" />
+            <span>Digital Repository • Study Material Archive</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#1f2918] font-serif-title">
-            KVS Study Resources & E-Library
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#142D21] font-serif-title">
+            Administrative & Leadership Study Resources & E-Library
           </h2>
-          <p className="text-xs sm:text-sm text-[#5a5040] mt-1">
-            Access indexed study materials, GFR 2017 notes, CCS Rules, NCF-SE 2023, and IGNOU measurement PDFs.
+          <p className="text-xs sm:text-sm text-[#55695E] mt-1">
+            Access indexed high-yield materials, Swamy's Handbook summaries, GFR 2017 notes, CCS Rules, and NCF-SE 2023.
           </p>
         </div>
 
@@ -68,27 +68,27 @@ export const ResourcesView: React.FC<ResourcesViewProps> = ({
             href={STUDY_FOLDER_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#34452C] hover:bg-[#253320] text-[#F4F0E6] text-xs font-semibold shadow-xs transition"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#11382B] hover:bg-[#1A4B37] text-white text-xs font-semibold shadow-xs transition cursor-pointer"
           >
-            <FolderOpen className="w-4 h-4 text-[#E6C387]" />
+            <FolderOpen className="w-4 h-4 text-[#A6CDB6]" />
             <span>Google Drive: Study Folders</span>
-            <ExternalLink className="w-3 h-3 text-[#D8CCA8]" />
+            <ExternalLink className="w-3 h-3 text-[#BFD6C8]" />
           </a>
           <a
             href={QUIZ_FOLDER_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-[#C5BAA0] bg-[#EAE2CE] hover:bg-[#E0D7C0] text-[#2f3b26] text-xs font-semibold transition shadow-2xs"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-[#D5DDD6] bg-[#F7F9F6] hover:bg-[#EEF3ED] text-[#142D21] text-xs font-semibold transition shadow-2xs cursor-pointer"
           >
-            <FolderOpen className="w-4 h-4 text-[#8C522A]" />
+            <FolderOpen className="w-4 h-4 text-[#11382B]" />
             <span>Practice Folder 2</span>
-            <ExternalLink className="w-3 h-3 text-[#7a6b52]" />
+            <ExternalLink className="w-3 h-3 text-[#7A8E82]" />
           </a>
         </div>
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="p-4 rounded-2xl bg-[#F2ECD8] border border-[#D5CBB4] shadow-xs space-y-3">
+      <div className="p-4 rounded-2xl bg-white border border-[#E2E8E2] shadow-xs space-y-3">
         <div className="flex flex-col md:flex-row gap-3">
           {/* Search Box */}
           <div className="relative flex-1">
@@ -197,7 +197,7 @@ export const ResourcesView: React.FC<ResourcesViewProps> = ({
                 </h3>
 
                 <p className="text-xs text-[#5a5040] mt-2 line-clamp-2 leading-relaxed">
-                  {res.description || "Official reference document for KVS Principal examination syllabus."}
+                  {res.description || "Official reference document for the Administrative Examination syllabus."}
                 </p>
 
                 <div className="mt-3 flex flex-wrap items-center gap-2 text-[11px] text-[#756851]">

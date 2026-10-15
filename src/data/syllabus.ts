@@ -16,8 +16,8 @@ export const EXAM_SCHEME = {
   testType: "Computer Based Test (CBT) Multiple Choice Questions",
   negativeMarking: "No negative marking (1 mark per correct answer)",
   interviewMarks: 60,
-  finalWeightage: "Written Test : Interview = 85 : 15",
-  eligibilitySnippet: "Master's Degree with at least 45% marks, B.Ed. or equivalent, and qualifying teaching/administrative experience as Vice-Principal / PGT as per KVS Recruitment Rules."
+  finalWeightage: "Written CBT Test : Interview = 85 : 15",
+  eligibilitySnippet: "Master's Degree with at least 50% marks, B.Ed. or equivalent, and qualifying teaching/administrative leadership experience (Vice-Principal / PGT / Educational Administrator) as prescribed under UPSC Recruitment Rules."
 };
 
 export const syllabusSections: SyllabusSection[] = [
@@ -44,7 +44,7 @@ export const syllabusSections: SyllabusSection[] = [
       },
       {
         name: "School Organization & Leadership",
-        description: "Principal as instructional leader, building collaborative culture, school development plan (SDP), leading teacher development, partnership with community & VMC.",
+        description: "Principal as instructional leader, building collaborative culture, school development plan (SDP), leading teacher development, partnership with community & SMC.",
         reference: "NCSL (NIEPA) School Leadership Framework"
       },
       {
@@ -76,9 +76,9 @@ export const syllabusSections: SyllabusSection[] = [
         reference: "GFR 2017 & Procurement Manual"
       },
       {
-        name: "KVS Education Code & School Governance",
-        description: "Constitution and functions of VMC & Executive Committee, Principal's administrative and financial powers, Vidyalaya Vikas Nidhi (VVN) accounting, KVS Transfer Guidelines.",
-        reference: "KVS Education Code for Kendriya Vidyalayas"
+        name: "Administrative Procedures, DSEAR 1973 & School Governance",
+        description: "Constitution and functions of School Management Committee (SMC), Principal's administrative and financial powers, School Fund accounting, Delhi School Education Act & Rules (DSEAR 1973) & Central Education Codes.",
+        reference: "Administrative Examination Syllabus & Civil Governance Manual"
       },
       {
         name: "Statutory Acts & Child Welfare",
@@ -100,7 +100,7 @@ export const syllabusSections: SyllabusSection[] = [
       },
       {
         name: "Indian Polity & Constitutional Values",
-        description: "Fundamental Rights, Directive Principles, Preamble values, educational provisions in Indian Constitution (Article 21A, 30, 45).",
+        description: "Fundamental Rights, Directive Principles, Preamble values, educational provisions in Indian Constitution (Article 21A, 30, 45, 315).",
         reference: "Constitution of India"
       }
     ]
@@ -157,10 +157,10 @@ export const RECOMMENDED_BOOKS = [
     badge: "Must Read"
   },
   {
-    title: "KVS Education Code for Kendriya Vidyalayas",
-    author: "Kendriya Vidyalaya Sangathan",
-    focus: "VMC constitution, admission norms, school accounts, VVN, and staff council.",
-    badge: "Official KVS"
+    title: "Civil Services Manual & School Governance Code",
+    author: "Union Public Service Commission / Ministry of Education",
+    focus: "SMC constitution, admission norms, school accounts, pupil funds, and staff council.",
+    badge: "Official UPSC"
   },
   {
     title: "National Education Policy 2020 & NCF-SE 2023",

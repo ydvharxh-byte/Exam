@@ -18,25 +18,25 @@ export const SyllabusView: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-[#D5CBB4] pb-5">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-[#E2E8E2] pb-5">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#DFE5D5] text-[#2F3D28] text-xs font-semibold mb-2 border border-[#C0CCB1]">
-            <Award className="w-3.5 h-3.5 text-[#3c4e2e]" />
-            <span>Official Examination Scheme • Kendriya Vidyalaya Sangathan</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EAF3EC] text-[#11382B] text-xs font-semibold mb-2 border border-[#C5D9CB]">
+            <Award className="w-3.5 h-3.5 text-[#11382B]" />
+            <span>Official Examination Scheme • Central Administrative Services</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#1f2918] font-serif-title">
-            Principal Examination Pattern & Detailed Syllabus
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#142D21] font-serif-title">
+            Administrative & Leadership Examination Pattern & Detailed Syllabus
           </h2>
-          <p className="text-xs sm:text-sm text-[#5a5040] mt-1">
-            Prescribed blueprint for Direct Recruitment and Limited Departmental Competitive Examination (LDCE).
+          <p className="text-xs sm:text-sm text-[#55695E] mt-1">
+            Prescribed blueprint for Direct Recruitment & Cadre Promotion to Administrative & Leadership roles.
           </p>
         </div>
 
         <button
           onClick={() => window.print()}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-[#C5BAA0] bg-[#FAF6EC] hover:bg-[#EAE2CE] text-[#34452C] text-xs font-semibold shadow-2xs transition cursor-pointer"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-[#D5DDD6] bg-white hover:bg-[#F3F7F4] text-[#142D21] text-xs font-semibold shadow-2xs transition cursor-pointer"
         >
-          <Printer className="w-4 h-4 text-[#8a7f66]" />
+          <Printer className="w-4 h-4 text-[#55695E]" />
           <span>Print / Save Blueprint</span>
         </button>
       </div>
@@ -156,8 +156,8 @@ export const SyllabusView: React.FC = () => {
       {/* Recommended Books & Reference Literature */}
       <section className="p-6 rounded-2xl bg-[#FBF7ED] border border-[#D5CBB4] shadow-xs space-y-4">
         <h3 className="text-base font-bold text-[#1f2918] font-serif-title flex items-center gap-2">
-          <BookOpen className="w-5 h-5 text-[#8C522A]" />
-          <span>Recommended Reference Handbooks for KVS Principal Aspirants</span>
+          <BookOpen className="w-5 h-5 text-[#C98A2C]" />
+          <span>Recommended Reference Handbooks for Administrative Aspirants</span>
         </h3>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-1">

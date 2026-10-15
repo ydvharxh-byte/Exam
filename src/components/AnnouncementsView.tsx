@@ -22,30 +22,43 @@ export const AnnouncementsView: React.FC<AnnouncementsViewProps> = ({
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       {/* Header */}
-      <div className="border-b border-[#D5CBB4] pb-5">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F0E6D2] text-[#8C522A] text-xs font-semibold mb-2 border border-[#DBC8A8]">
-          <Bell className="w-3.5 h-3.5 text-[#9C5A30]" />
-          <span>Official Bulletins & Academic Circulars</span>
+      <div className="border-b border-[#E2E8E2] pb-5">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EAF3EC] text-[#11382B] text-xs font-semibold mb-2 border border-[#C5D9CB]">
+          <Bell className="w-3.5 h-3.5 text-[#11382B]" />
+          <span>Official Examination Bulletins & Circulars</span>
         </div>
-        <h2 className="text-2xl sm:text-3xl font-bold text-[#1f2918] font-serif-title">
-          KVS Principal Examination Announcements & Notices
+        <h2 className="text-2xl sm:text-3xl font-bold text-[#142D21] font-serif-title">
+          Administrative Examination Announcements & Notices
         </h2>
-        <p className="text-xs sm:text-sm text-[#5a5040] mt-1">
-          Stay informed on LDCE and Direct Recruitment updates, syllabus revisions, GFR circulars, and exam dates.
+        <p className="text-xs sm:text-sm text-[#55695E] mt-1">
+          Stay informed on CBT schedules, syllabus revisions, mock tests, and official notifications.
         </p>
       </div>
 
       {/* Announcements List */}
       <div className="space-y-4">
-        {activeAnnouncements.map((item) => {
+        {activeAnnouncements.length === 0 ? (
+          <div className="p-10 rounded-2xl bg-white border border-[#E2E8E2] text-center space-y-3 shadow-2xs">
+            <div className="w-12 h-12 rounded-full bg-[#EAF3EC] text-[#11382B] flex items-center justify-center mx-auto">
+              <Bell className="w-6 h-6" />
+            </div>
+            <h3 className="text-base font-bold font-serif-title text-[#142D21]">
+              No Active Announcements
+            </h3>
+            <p className="text-xs text-[#55695E] max-w-md mx-auto leading-relaxed">
+              There are currently no new alerts. Examination notifications and circulars will be published here as soon as they are announced.
+            </p>
+          </div>
+        ) : (
+          activeAnnouncements.map((item) => {
           const isDismissed = dismissedIds.includes(item.id);
           const isHighPriority = item.priority === "High";
 
           return (
             <div
               key={item.id}
-              className={`p-6 rounded-2xl bg-[#FBF7ED] border transition shadow-xs space-y-3 ${
-                isHighPriority ? "border-[#DEC9B2] ring-1 ring-[#DBC8A8]" : "border-[#D5CBB4]"
+              className={`p-6 rounded-2xl bg-white border transition shadow-xs space-y-3 ${
+                isHighPriority ? "border-[#F2DDD2] ring-1 ring-[#A2573B]/20" : "border-[#E2E8E2]"
               }`}
             >
               <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#E2D8C0] pb-3">
@@ -84,7 +97,7 @@ export const AnnouncementsView: React.FC<AnnouncementsViewProps> = ({
                     <ExternalLink className="w-3 h-3" />
                   </button>
                 ) : (
-                  <span className="text-[#8a7f66] text-[11px]">Official KVS Sangathan Release</span>
+                  <span className="text-[#8a7f66] text-[11px]">Official UPSC Commission Release</span>
                 )}
 
                 <button
@@ -98,7 +111,8 @@ export const AnnouncementsView: React.FC<AnnouncementsViewProps> = ({
               </div>
             </div>
           );
-        })}
+        })
+      )}
       </div>
     </div>
   );

@@ -1,6 +1,26 @@
 import { Question } from "./types";
+import { csmopQuestions } from "./csmopQuestions";
 
 export const starterQuestions: Question[] = [
+  ...csmopQuestions,
+  // Exact Chapter 5 Question from Image 2
+  {
+    id: "q-edu-plan-1",
+    module: "Perspectives in Education",
+    topic: "Educational Planning and Management",
+    question: "Which of the following is NOT a key feature of effective educational planning?",
+    options: [
+      "Setting clear and achievable goals",
+      "Flexibility to address changing needs",
+      "Involving all stakeholders",
+      "Ignoring local context"
+    ],
+    correctIndex: 3,
+    explanation: "Effective educational planning must always take local context, community resources, socio-economic factors, and demographic diversity into consideration. Ignoring local context leads to disconnected and rigid plans.",
+    sourceRef: "NIEPA Educational Planning Framework, Chapter 5",
+    difficulty: "Medium",
+    published: true
+  },
   // Module 1: Perspectives on Education & School Leadership (NEP 2020, NCF, Leadership)
   {
     id: "q-nep-1",
@@ -161,7 +181,7 @@ export const starterQuestions: Question[] = [
     id: "q-ccs-4",
     module: "Admin & Finance",
     topic: "CCS (Leave) Rules 1972",
-    question: "In Kendriya Vidyalayas, teaching staff serve in a 'Vacation Department'. How many days of Earned Leave (EL) are credited per calendar year to a permanent teacher who avails the full vacation?",
+    question: "Under CCS (Leave) Rules 1972, teaching staff serve in a 'Vacation Department'. How many days of Earned Leave (EL) are credited per calendar year to a permanent teacher who avails the full vacation?",
     options: [
       "Zero days of regular EL (except HPL and EL credited if prevented from vacation)",
       "30 days",
@@ -197,7 +217,7 @@ export const starterQuestions: Question[] = [
     id: "q-gfr-1",
     module: "Admin & Finance",
     topic: "General Financial Rules (GFR 2017)",
-    question: "According to Rule 149 of GFR 2017, the procurement of common-use Goods and Services by Government Ministries and autonomous bodies like KVS is mandatory through which portal?",
+    question: "According to Rule 149 of GFR 2017, the procurement of common-use Goods and Services by Government Ministries, Departments and central educational bodies is mandatory through which portal?",
     options: [
       "Government e-Marketplace (GeM)",
       "Central Public Procurement Portal (CPPP) exclusively",
@@ -247,70 +267,70 @@ export const starterQuestions: Question[] = [
   {
     id: "q-gfr-4",
     module: "Admin & Finance",
-    topic: "School Funds & Accounts (VVN)",
-    question: "In Kendriya Vidyalayas, what is the full form of 'VVN', and what is the primary source of its fund collection?",
+    topic: "School Funds & Accounts (SDF/Pupil Fund)",
+    question: "Under Public School Financial Management Rules, what is the primary purpose and accounting mechanism for the School Development Fund / Pupil Welfare Fund?",
     options: [
-      "Vidyalaya Vikas Nidhi - collected from students as a quarterly development fee",
-      "Vidya Vahini Nidhi - funded solely by Ministry of Defense grants",
-      "Vidyalaya Vahan Nidhi - bus transport fund",
-      "Vidyarthi Vridhi Nidhi - alumni donations only"
+      "Student welfare, laboratory upkeep, sports, and school activities as sanctioned by the School Management Committee",
+      "Payment of regular monthly salaries of permanent teaching staff",
+      "Direct remittance to the Consolidated Fund of India without local discretion",
+      "Discretionary expenditure by the Principal without any committee approval or audit"
     ],
     correctIndex: 0,
-    explanation: "Vidyalaya Vikas Nidhi (VVN) is the school development fund of KVS, collected quarterly from students, utilized for pupil welfare, minor repairs, lab upkeep, sports, and school activities as per VMC approval.",
-    sourceRef: "KVS Accounts Code & VVN Rules",
+    explanation: "School Development Funds / Pupil Welfare Funds are maintained for student-centric amenities, academic enrichment, sports, and minor campus maintenance, requiring statutory School Management Committee (SMC) budget approval and annual audit.",
+    sourceRef: "Civil Educational Institutions Accounts & Financial Guidelines",
     difficulty: "Easy",
     published: true
   },
 
-  // Module 4: KVS Education Code & School Governance
+  // Module 4: Administrative Governance & Constitutional Provisions
   {
-    id: "q-kvs-1",
+    id: "q-upsc-1",
     module: "Perspectives in Education",
-    topic: "KVS Education Code",
-    question: "Who is the ex-officio Chairman of the Vidyalaya Management Committee (VMC) of a Kendriya Vidyalaya located in a Civil Sector district headquarters?",
+    topic: "School Governance & Civil Administration",
+    question: "In government and central educational institutions located in district headquarters, who typically serves as the ex-officio Chairman of the School Management Committee (SMC / VMC)?",
     options: [
-      "District Collector / District Magistrate (DM) or an ADM nominated by DM",
-      "The Principal of the Kendriya Vidyalaya",
+      "District Collector / District Magistrate (DM) or a nominated Senior Civil Officer",
+      "The Principal of the school (acting as sole Chairman & Secretary)",
       "The Senior-most PGT of the school",
-      "The Member of Parliament (MP) of the constituency"
+      "The local Member of Parliament (MP)"
     ],
     correctIndex: 0,
-    explanation: "As per the KVS Education Code, in Civil Sector schools, the District Magistrate / District Collector or an officer nominated by them acts as Chairman of the VMC. The Principal is the Member Secretary.",
-    sourceRef: "KVS Education Code for Kendriya Vidyalayas, Chapter IV",
+    explanation: "Under institutional governance norms for government/central civil schools, the District Magistrate (DM/DC) or a nominated administrative officer serves as the Chairman, while the Principal serves as the Member Secretary.",
+    sourceRef: "Civil School Administration & Governance Manual, Chapter IV",
     difficulty: "Medium",
     published: true
   },
   {
-    id: "q-kvs-2",
+    id: "q-upsc-2",
     module: "Perspectives in Education",
-    topic: "KVS Education Code",
-    question: "Under KVS Admission Guidelines, which priority category is given Category-I status for admissions in Civil/Defence Sector Kendriya Vidyalayas?",
+    topic: "Statutory Educational Rights (RTE Act 2009)",
+    question: "Under Section 12(1)(c) of the Right of Children to Free and Compulsory Education (RTE) Act 2009, what minimum percentage of entry-level seats must be reserved for children from Economically Weaker Sections (EWS) and Disadvantaged Groups?",
     options: [
-      "Children of transferable and non-transferable Central Government employees and ex-servicemen",
-      "Children of Central Autonomous bodies / PSUs",
-      "Children of State Government employees",
-      "Children from the general public / private sector"
+      "25%",
+      "15%",
+      "10%",
+      "33%"
     ],
     correctIndex: 0,
-    explanation: "Category-I in Defence/Civil sector KVs is reserved for children of transferable and non-transferable Central Government employees and ex-servicemen. (In Institute of Higher Learning/Project sector, project employees' children are Category-I).",
-    sourceRef: "KVS Admission Guidelines, Part A",
+    explanation: "Section 12(1)(c) of the RTE Act 2009 mandates that all specified category schools and private unaided schools shall admit at least 25% of the strength of that class from children belonging to weaker sections and disadvantaged groups.",
+    sourceRef: "Right of Children to Free and Compulsory Education (RTE) Act 2009, Section 12",
     difficulty: "Easy",
     published: true
   },
   {
-    id: "q-kvs-3",
+    id: "q-upsc-3",
     module: "Perspectives in Education",
-    topic: "KVS Education Code",
-    question: "What is the motto inscribed on the emblem of Kendriya Vidyalaya Sangathan (KVS)?",
+    topic: "Indian Polity & Civil Services",
+    question: "Under Article 315 of the Constitution of India, which constitutional body is mandated to conduct competitive examinations and recruitment for Group A and B Gazetted school administrative leadership (Principals & Vice-Principals)?",
     options: [
-      "तत् त्वं पूषन् अपावृणु (Tat Tvam Pushan Apavrinu)",
-      "सत्यमेव जयते (Satyameva Jayate)",
-      "विद्या ददाति विनयं (Vidya Dadati Vinayam)",
-      "तमसो मा ज्योतिर्गमय (Tamaso Ma Jyotirgamaya)"
+      "Union Public Service Commission (UPSC)",
+      "Staff Selection Commission (SSC)",
+      "National Testing Agency (NTA)",
+      "Central Board of Secondary Education (CBSE)"
     ],
     correctIndex: 0,
-    explanation: "The KVS emblem features the quotation from the Isha Upanishad: 'तत् त्वं पूषन् अपावृणु' (O Sun, please unveil that cover to reveal the truth).",
-    sourceRef: "KVS Emblem & Foundation Charter",
+    explanation: "The Union Public Service Commission (UPSC), established under Article 315 of the Constitution of India, is the constitutional authority mandated to conduct competitive recruitment tests and interviews for Gazetted educational leaders, Principals, and Education Officers.",
+    sourceRef: "Constitution of India, Article 315 & UPSC Charter",
     difficulty: "Easy",
     published: true
   },
@@ -401,6 +421,404 @@ export const starterQuestions: Question[] = [
     explanation: "Item difficulty index (p) is the proportion of examinees who answered the item correctly. A value of 0.85 means 85% answered correctly, indicating an easy item (ideal balanced items are generally around 0.50 to 0.60).",
     sourceRef: "IGNOU BES-127 Unit 3: Educational Measurement",
     difficulty: "Hard",
+    published: true
+  }
+,
+
+  // --- EXTRACTED FROM DRIVE REPOSITORY ---
+  {
+    id: "q-drive-reason-1",
+    module: "Reasoning & Quantitative",
+    topic: "Analytical Reasoning & Blood Relations",
+    question: "Consider the following Question and Statements:\nThere are 5 members A, B, C, D, E in a family.\nQuestion: What is the relation of E to B?\nStatement-1: A and B are a married couple.\nStatement-2: D is the father of C.\nStatement-3: E is D's son.\nStatement-4: A and C are sisters.\nWhich of the following is correct?",
+    options: [
+          "All four statements together are sufficient to answer the Question",
+          "Statement-1, Statement-2 and Statement-3 are sufficient to answer the Question",
+          "Statement-1, Statement-3 and Statement-4 are sufficient to answer the Question",
+          "All four statements are not sufficient to answer the Question"
+    ],
+    correctIndex: 0,
+    explanation: "From St-1: A & B are married couple. From St-4: A and C are sisters. From St-2: D is father of C (so D is also father of A). From St-3: E is D's son (so E is brother of A & C). Since A is married to B and E is A's brother, E is brother-in-law to B. All four statements together are required to establish the relationship.",
+    sourceRef: "UPSC CSAT / Drive Reasoning & Blood Relations Module",
+    difficulty: "Hard",
+    published: true
+  },
+
+  {
+    id: "q-drive-reason-2",
+    module: "Reasoning & Quantitative",
+    topic: "Analytical Reasoning & Blood Relations",
+    question: "Pointing to a girl on a stage, Renu said, 'She is the sister of the son of the wife of my husband'. How is the girl related to Renu?",
+    options: [
+          "Daughter",
+          "Sister-in-law",
+          "Sister",
+          "Cousin"
+    ],
+    correctIndex: 0,
+    explanation: "Breakdown: 'Wife of my husband' = Renu herself. 'Son of the wife of my husband' = Renu's son. 'Sister of the son' = Renu's daughter. Hence, the girl is Renu's daughter.",
+    sourceRef: "Drive Reasoning & Blood Relations Module, Q2",
+    difficulty: "Easy",
+    published: true
+  },
+
+  {
+    id: "q-drive-reason-3",
+    module: "Reasoning & Quantitative",
+    topic: "Analytical Reasoning & Blood Relations",
+    question: "Given: 1. A is the brother of B. 2. C is the father of A. 3. D is the brother of E. 4. E is the daughter of B. Who is the uncle/maternal uncle of D?",
+    options: [
+          "A",
+          "B",
+          "C",
+          "E"
+    ],
+    correctIndex: 0,
+    explanation: "E is the daughter of B, and D is the brother of E, which means D is the son of B. A is the brother of B. Therefore, A is the uncle (or maternal uncle) of D.",
+    sourceRef: "Drive Reasoning & Blood Relations Module, Q3",
+    difficulty: "Medium",
+    published: true
+  },
+
+  {
+    id: "q-drive-reason-4",
+    module: "Reasoning & Quantitative",
+    topic: "Analytical Reasoning & Blood Relations",
+    question: "Given that 'A + B' means A is the Son of B, and 'A - B' means A is the wife of B, what does the symbolic expression 'P + R - Q' mean?",
+    options: [
+          "Q is the father of P",
+          "Q is the son of P",
+          "Q is the wife of P",
+          "None of the above"
+    ],
+    correctIndex: 0,
+    explanation: "'P + R' implies P is the son of R. 'R - Q' implies R is the wife of Q. Consequently, Q is the husband of R. Since P is R's son, Q is the father of P.",
+    sourceRef: "Drive Reasoning & Blood Relations Module, Q4",
+    difficulty: "Medium",
+    published: true
+  },
+
+  {
+    id: "q-drive-eng-1",
+    module: "General & Languages",
+    topic: "English: Active & Passive Voice",
+    question: "Which one of the following represents the correct passive transformation of: 'The governing body proposed to defer the discussion on budget allocation until the next academic session'?",
+    options: [
+          "The discussion on budget allocation was proposed to be deferred until the next academic session by the governing body",
+          "It was proposed by the governing body to defer the discussion on budget allocation until the next academic session",
+          "The discussion on budget allocation was proposed deferring until the next academic session by the governing body",
+          "It was proposed that the discussion on budget allocation is deferred until the next academic session by the governing body"
+    ],
+    correctIndex: 0,
+    explanation: "When an active sentence has a non-finite complement clause (to defer...), the object of the infinitive ('the discussion on budget allocation') moves to the subject position of the passive matrix verb: 'was proposed to be deferred'.",
+    sourceRef: "Drive English Module: Active & Passive Voice, Q1",
+    difficulty: "Hard",
+    published: true
+  },
+
+  {
+    id: "q-drive-eng-2",
+    module: "General & Languages",
+    topic: "English: Active & Passive Voice",
+    question: "Transform into passive voice: 'The director requested the faculty members to review the draft curriculum thoroughly.'",
+    options: [
+          "The faculty members were requested to review the draft curriculum thoroughly by the director",
+          "The faculty members were requested to be reviewed the draft curriculum thoroughly by the director",
+          "The draft curriculum was requested to review by the faculty members and the director",
+          "The faculty members were being requested to review the draft curriculum thoroughly"
+    ],
+    correctIndex: 0,
+    explanation: "In sentences with reporting or directive verbs governing an infinitive phrase (requested + object + to-infinitive), the matrix verb becomes passive ('were requested') while the to-infinitive clause remains unchanged ('to review').",
+    sourceRef: "Drive English Module: Active & Passive Voice, Q2",
+    difficulty: "Medium",
+    published: true
+  },
+
+  {
+    id: "q-drive-eng-3",
+    module: "General & Languages",
+    topic: "English: Active & Passive Voice",
+    question: "What is the standard passive voice conversion of the negative imperative command: 'Do not disclose confidential examination particulars to unauthorized personnel'?",
+    options: [
+          "Let confidential examination particulars not be disclosed to unauthorized personnel",
+          "Confidential examination particulars should not disclose to unauthorized personnel",
+          "You are ordered not to be disclosed confidential examination particulars to unauthorized personnel",
+          "Let not unauthorized personnel be disclosed confidential examination particulars"
+    ],
+    correctIndex: 0,
+    explanation: "Negative imperative commands of the form 'Do not + verb + object' transform into passive using the rule: 'Let + object + not be + past participle (V3)'.",
+    sourceRef: "Drive English Module: Active & Passive Voice, Q5",
+    difficulty: "Medium",
+    published: true
+  },
+
+  {
+    id: "q-drive-idiom-1",
+    module: "General & Languages",
+    topic: "English: Idioms & Phrases",
+    question: "Choose the option that most appropriately explains the meaning of the underlined phrase: 'The committee’s recommendation was ultimately a damp squib, generating considerable anticipation but producing little of practical consequence.'",
+    options: [
+          "Something that fails to produce the expected excitement or impact",
+          "A proposal that is deliberately suppressed before implementation",
+          "A proposal that encounters opposition after initial approval",
+          "Something that appears promising but requires extensive modification"
+    ],
+    correctIndex: 0,
+    explanation: "A 'damp squib' is an event, attempt, or situation that is much less impressive, successful, or exciting than expected.",
+    sourceRef: "Drive English Module: Idioms & Phrases, Q1",
+    difficulty: "Medium",
+    published: true
+  },
+
+  {
+    id: "q-drive-idiom-2",
+    module: "General & Languages",
+    topic: "English: Idioms & Phrases",
+    question: "What is the meaning of the idiom: 'The disagreement over the distribution of academic duties became a bone of contention among the faculty'?",
+    options: [
+          "A cause or subject of continuous disagreement and dispute",
+          "A difficult administrative responsibility",
+          "A matter of professional pride and accolade",
+          "A minor and negligible scheduling issue"
+    ],
+    correctIndex: 0,
+    explanation: "A 'bone of contention' refers to an issue or problem over which there is continuing disagreement or dispute.",
+    sourceRef: "Drive English Module: Idioms & Phrases, Q4",
+    difficulty: "Easy",
+    published: true
+  },
+
+  {
+    id: "q-drive-idiom-3",
+    module: "General & Languages",
+    topic: "English: Idioms & Phrases",
+    question: "Choose the correct meaning of the idiom 'to take something with a pinch of salt':",
+    options: [
+          "To treat or accept something with skepticism and caution",
+          "To accept something completely without question",
+          "To reject an allegation immediately",
+          "To maintain utmost official confidentiality"
+    ],
+    correctIndex: 0,
+    explanation: "To take something with a pinch of salt means to view something with skepticism or to not completely believe it.",
+    sourceRef: "Drive English Module: Idioms & Phrases, Q5",
+    difficulty: "Easy",
+    published: true
+  },
+
+  {
+    id: "q-drive-rti-1",
+    module: "School Safety & Law",
+    topic: "Right to Information (RTI) Act 2005",
+    question: "Under Section 2(e) of the RTI Act, 2005, who is designated as the 'Competent Authority' in the case of the House of the People (Lok Sabha)?",
+    options: [
+          "The Speaker of the Lok Sabha",
+          "The Prime Minister",
+          "The Secretary General, Lok Sabha",
+          "The Chief Justice of India"
+    ],
+    correctIndex: 0,
+    explanation: "Under Section 2(e)(i) of the RTI Act 2005, the Speaker is the Competent Authority in the case of the House of the People (Lok Sabha) and the Legislative Assemblies.",
+    sourceRef: "RTI Act 2005, Section 2(e) / Drive RTI Document, Q1",
+    difficulty: "Medium",
+    published: true
+  },
+
+  {
+    id: "q-drive-rti-2",
+    module: "School Safety & Law",
+    topic: "Right to Information (RTI) Act 2005",
+    question: "Which section of the Right to Information Act, 2005 deals with 'Severability' (providing that part of the record which does not contain exempt information)?",
+    options: [
+          "Section 10",
+          "Section 8",
+          "Section 9",
+          "Section 11"
+    ],
+    correctIndex: 0,
+    explanation: "Section 10 of the RTI Act, 2005 deals with Severability: where a request for access to information is rejected in respect of that part of the record which is exempt, access may be provided to that part which does not contain exempt information.",
+    sourceRef: "RTI Act 2005, Section 10 / Drive RTI Document, Q3",
+    difficulty: "Medium",
+    published: true
+  },
+
+  {
+    id: "q-drive-rti-3",
+    module: "School Safety & Law",
+    topic: "Right to Information (RTI) Act 2005",
+    question: "Under Section 19(1) of the RTI Act 2005, what is the statutory time limit within which an applicant may prefer a First Appeal before the First Appellate Authority (FAA)?",
+    options: [
+          "Within 30 days from the expiry of the period or from receipt of the PIO decision",
+          "Within 15 days of receiving the PIO decision",
+          "Within 45 days of the PIO decision",
+          "Within 60 days of the PIO decision"
+    ],
+    correctIndex: 0,
+    explanation: "Section 19(1) mandates that an aggrieved applicant may prefer a First Appeal within 30 days from the expiry of the statutory response period or from the receipt of the PIO decision.",
+    sourceRef: "RTI Act 2005, Section 19(1) / Drive RTI Document, Q9",
+    difficulty: "Medium",
+    published: true
+  },
+
+  {
+    id: "q-drive-rti-4",
+    module: "School Safety & Law",
+    topic: "Right to Information (RTI) Act 2005",
+    question: "Under Section 11 of the RTI Act 2005, when a CPIO intends to disclose confidential third-party information, within how many days must notice be given to the third party, and how many days is the third party allowed to make representation?",
+    options: [
+          "Notice within 5 days; 10 days allowed for representation",
+          "Notice within 2 days; 7 days allowed for representation",
+          "Notice within 10 days; 15 days allowed for representation",
+          "Notice within 15 days; 30 days allowed for representation"
+    ],
+    correctIndex: 0,
+    explanation: "Under Section 11(1), the CPIO/SPIO must within 5 days of receiving the request give written notice to the third party, and the third party is given 10 days to make representation against disclosure.",
+    sourceRef: "RTI Act 2005, Section 11(1) / Drive RTI Document, Q10",
+    difficulty: "Hard",
+    published: true
+  },
+
+  {
+    id: "q-drive-pocso-1",
+    module: "School Safety & Law",
+    topic: "NCPCR & POCSO Act Compliance",
+    question: "Consider the following statements regarding the National Commission for Protection of Child Rights (NCPCR):\n1. It is constituted under Section 3 of the CPCR Act, 2005.\n2. It consists of a Chairperson and six Members.\n3. At least two of the six Members must be women.\n4. Its office is located in New Delhi.\nWhich of the statements given above are correct?",
+    options: [
+          "1, 2, 3 and 4",
+          "1 and 2 only",
+          "1, 2 and 3 only",
+          "2, 3 and 4 only"
+    ],
+    correctIndex: 0,
+    explanation: "All four statements are correct under Section 3 of the Commissions for Protection of Child Rights (CPCR) Act, 2005. The Commission comprises 1 Chairperson and 6 Members (min 2 women).",
+    sourceRef: "CPCR Act 2005, Section 3 / Drive POCSO & NCPCR Mock, Q1",
+    difficulty: "Medium",
+    published: true
+  },
+
+  {
+    id: "q-drive-pocso-2",
+    module: "School Safety & Law",
+    topic: "NCPCR & POCSO Act Compliance",
+    question: "Under Section 19 and Section 21 of the POCSO Act 2012, what is the legal obligation and consequence for a school Principal or staff member who fails to report suspected sexual abuse against a child?",
+    options: [
+          "Reporting is mandatory; failure to report is punishable with imprisonment up to six months or fine or both",
+          "Reporting is discretionary based on internal school inquiry findings",
+          "The Principal can resolve the matter through parent mediation without police reporting",
+          "Only the medical doctor examining the child is legally obligated to report"
+    ],
+    correctIndex: 0,
+    explanation: "Under Section 19 of POCSO Act 2012, any person (including school heads and teachers) who has apprehension or knowledge that an offence has been committed must report to Special Juvenile Police Unit or local police. Section 21 prescribes up to 6 months imprisonment, fine, or both for failure to report.",
+    sourceRef: "POCSO Act 2012, Sections 19 & 21 / Drive POCSO Document",
+    difficulty: "Hard",
+    published: true
+  },
+
+  {
+    id: "q-drive-gfr-1",
+    module: "Admin & Finance",
+    topic: "GFR 2017 & GeM Public Procurement",
+    question: "Under Rule 149(i) of the General Financial Rules (GFR 2017), what is the direct purchase threshold through any available supplier on the Government e-Marketplace (GeM)?",
+    options: [
+          "Up to ₹25,000",
+          "Up to ₹50,000",
+          "Up to ₹1,00,000",
+          "Up to ₹2,50,000"
+    ],
+    correctIndex: 0,
+    explanation: "Rule 149(i) of GFR 2017 allows direct purchase of goods/services up to ₹25,000 through any available supplier on GeM meeting quality, specification, and delivery period.",
+    sourceRef: "GFR 2017, Rule 149(i) / Drive GFR Document",
+    difficulty: "Easy",
+    published: true
+  },
+
+  {
+    id: "q-drive-gfr-2",
+    module: "Admin & Finance",
+    topic: "GFR 2017 & GeM Public Procurement",
+    question: "Under Rule 155 of GFR 2017, purchase of goods by a Local Purchase Committee of three members is permissible for items costing:",
+    options: [
+          "Above ₹25,000 and up to ₹2,50,000 on each occasion",
+          "Above ₹10,000 and up to ₹1,00,000 on each occasion",
+          "Above ₹50,000 and up to ₹5,00,000 on each occasion",
+          "Above ₹1,00,000 and up to ₹10,00,000 on each occasion"
+    ],
+    correctIndex: 0,
+    explanation: "Rule 155 of GFR 2017 provides for purchase of goods costing above ₹25,000 and up to ₹2,50,000 on each occasion on the recommendations of a duly constituted Local Purchase Committee of three members.",
+    sourceRef: "GFR 2017, Rule 155 / Drive GFR Document",
+    difficulty: "Medium",
+    published: true
+  },
+
+  {
+    id: "q-drive-rte-1",
+    module: "School Safety & Law",
+    topic: "Right to Education (RTE) Act 2009",
+    question: "Under Section 12(1)(c) of the Right of Children to Free and Compulsory Education (RTE) Act 2009, what percentage of Class 1 (or pre-school) seats must private unaided schools reserve for children belonging to disadvantaged groups and weaker sections?",
+    options: [
+          "At least 25%",
+          "At least 15%",
+          "At least 33%",
+          "At least 50%"
+    ],
+    correctIndex: 0,
+    explanation: "Section 12(1)(c) of the RTE Act 2009 mandates specified schools and unaided schools to admit in Class 1, to the extent of at least twenty-five per cent of the strength of that class, children belonging to weaker sections and disadvantaged groups.",
+    sourceRef: "RTE Act 2009, Section 12(1)(c) / Drive RTE Document",
+    difficulty: "Easy",
+    published: true
+  },
+
+  {
+    id: "q-drive-digi-1",
+    module: "Pedagogy & Evaluation",
+    topic: "Digital Literacy & Cyber Security in Education",
+    question: "Under modern cyber-security guidelines and the Digital Personal Data Protection (DPDP) Act 2023, what is mandatory before processing personal data of children in digital learning environments?",
+    options: [
+          "Verifiable parental or legal guardian consent",
+          "Self-certification by the minor student",
+          "Notification to the district education officer only",
+          "Storing all student credentials in unencrypted format"
+    ],
+    correctIndex: 0,
+    explanation: "Section 9 of the DPDP Act 2023 mandates obtaining verifiable consent of the parent or lawful guardian of the child before processing any personal data of a child (individual under 18 years of age).",
+    sourceRef: "DPDP Act 2023 Section 9 / Drive Cyber Security Document",
+    difficulty: "Medium",
+    published: true
+  },
+
+  {
+    id: "q-drive-eoff-1",
+    module: "Admin & Finance",
+    topic: "Central Secretariat Manual & e-Office Procedure",
+    question: "In the Central Secretariat Manual of Office Procedure (CSMOP) and Government e-Office workflow, what does the acronym 'DFA' stand for?",
+    options: [
+          "Draft For Approval",
+          "Digital File Allocation",
+          "Direct Financial Authorization",
+          "Document Filing Archive"
+    ],
+    correctIndex: 0,
+    explanation: "In government office procedure and e-Office, DFA stands for 'Draft For Approval'—a proposed communication placed before the competent officer for review and sanction prior to issue.",
+    sourceRef: "CSMOP Manual / Drive eOffice Procedure Document",
+    difficulty: "Easy",
+    published: true
+  },
+
+  {
+    id: "q-drive-hindi-1",
+    module: "General & Languages",
+    topic: "Hindi Vyakaran: Sandhi & Samas",
+    question: "'प्रधानाचार्य' (Principal) शब्द का शुद्ध संधि-विच्छेद निम्नलिखित में से कौन-सा है तथा इसमें कौन-सी संधि है?",
+    options: [
+          "प्रधान + आचार्य (दीर्घ स्वर संधि)",
+          "प्रधा + नाचार्य (गुण स्वर संधि)",
+          "प्रधान + चार्य (व्यंजन संधि)",
+          "प्रध + अनाचार्य (वृद्धि स्वर संधि)"
+    ],
+    correctIndex: 0,
+    explanation: "प्रधानाचार्य = प्रधान (अ) + आचार्य (आ) = अ + आ मिलकर 'आ' बनता है, जो कि दीर्घ स्वर संधि (अकः सवर्णे दीर्घः) का शुद्ध उदाहरण है।",
+    sourceRef: "Drive Hindi Vyakaran Document",
+    difficulty: "Easy",
     published: true
   }
 ];

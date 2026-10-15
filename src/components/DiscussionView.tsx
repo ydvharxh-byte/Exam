@@ -81,31 +81,31 @@ export const DiscussionView: React.FC<DiscussionViewProps> = ({
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-[#D5CBB4] pb-5">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-[#E2E8E2] pb-5">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#DFE5D5] text-[#2F3D28] text-xs font-semibold mb-2 border border-[#C0CCB1]">
-            <MessageSquare className="w-3.5 h-3.5 text-[#3c4e2e]" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EAF3EC] text-[#11382B] text-xs font-semibold mb-2 border border-[#C5D9CB]">
+            <MessageSquare className="w-3.5 h-3.5 text-[#11382B]" />
             <span>Peer Learning & Administrative Exchange</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#1f2918] font-serif-title">
-            Educator Doubt Discussion Board
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#142D21] font-serif-title">
+            Aspirants Doubt Discussion Forum
           </h2>
-          <p className="text-xs sm:text-sm text-[#5a5040] mt-1">
-            Collaborative forum where Principal aspirants, Vice-Principals, and senior PGTs discuss service rules, NEP questions, and school management.
+          <p className="text-xs sm:text-sm text-[#55695E] mt-1">
+            Collaborative forum where aspirants and officers discuss service rules, administrative procedures, pedagogy, and exam questions.
           </p>
         </div>
 
         <button
           onClick={() => setShowNewThreadModal(true)}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#34452C] hover:bg-[#253320] text-[#F4F0E6] text-xs font-semibold shadow-xs transition cursor-pointer"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#11382B] hover:bg-[#1A4B37] text-white text-xs font-semibold shadow-xs transition cursor-pointer"
         >
-          <PlusCircle className="w-4 h-4 text-[#E6C387]" />
+          <PlusCircle className="w-4 h-4 text-[#A6CDB6]" />
           <span>Ask New Question / Doubt</span>
         </button>
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="p-4 rounded-2xl bg-[#F2ECD8] border border-[#D5CBB4] shadow-xs flex flex-col md:flex-row gap-3">
+      <div className="p-4 rounded-2xl bg-white border border-[#E2E8E2] shadow-xs flex flex-col md:flex-row gap-3">
         <div className="relative flex-1">
           <Search className="w-4 h-4 text-[#8a7f66] absolute left-3.5 top-3.5" />
           <input
@@ -221,7 +221,27 @@ export const DiscussionView: React.FC<DiscussionViewProps> = ({
 
       {/* Threads List */}
       <div className="space-y-5">
-        {filteredThreads.map((thread) => {
+        {filteredThreads.length === 0 ? (
+          <div className="p-10 rounded-2xl bg-white border border-[#E2E8E2] text-center space-y-3 shadow-2xs">
+            <div className="w-12 h-12 rounded-full bg-[#EAF3EC] text-[#11382B] flex items-center justify-center mx-auto">
+              <MessageSquare className="w-6 h-6" />
+            </div>
+            <h3 className="text-base font-bold font-serif-title text-[#142D21]">
+              No Discussion Threads Yet
+            </h3>
+            <p className="text-xs text-[#55695E] max-w-md mx-auto leading-relaxed">
+              Have a query regarding CSMoP, financial rules, pedagogy, or exam preparation? Be the first to start a discussion.
+            </p>
+            <button
+              onClick={() => setShowNewThreadModal(true)}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#11382B] text-white text-xs font-semibold shadow-xs cursor-pointer hover:bg-[#1A4B37] transition"
+            >
+              <PlusCircle className="w-4 h-4 text-[#A6CDB6]" />
+              <span>Ask a Question</span>
+            </button>
+          </div>
+        ) : (
+          filteredThreads.map((thread) => {
           const threadReplies = replies.filter((r) => r.threadId === thread.id && !r.hidden);
           const isExpanded = expandedThreads[thread.id] ?? false;
 
@@ -335,7 +355,8 @@ export const DiscussionView: React.FC<DiscussionViewProps> = ({
               )}
             </div>
           );
-        })}
+        })
+      )}
       </div>
     </div>
   );

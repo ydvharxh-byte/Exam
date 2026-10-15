@@ -1,6 +1,6 @@
-# KVS Principal Exam Preparation Portal
+# Central Administrative & Leadership Examination Portal
 
-Vintage-style preparation portal for teachers preparing for the KVS Principal exam.
+Premier preparation suite, interactive CBT simulator, and 10 topic quizzes for administrative and leadership examinations.
 
 ## Run Locally
 

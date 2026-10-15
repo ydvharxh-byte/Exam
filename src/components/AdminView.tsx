@@ -28,7 +28,7 @@ interface AdminViewProps {
 }
 
 export const AdminView: React.FC<AdminViewProps> = ({
-  admins,
+  admins: _admins,
   activeAdmin,
   onLogin,
   onLogout,
@@ -36,7 +36,7 @@ export const AdminView: React.FC<AdminViewProps> = ({
   onToggleQuestionPublish,
   onAddQuestion,
   announcements,
-  onToggleAnnouncement,
+  onToggleAnnouncement: _onToggleAnnouncement,
   onAddAnnouncement,
   resources,
   onSyncResources,
@@ -64,7 +64,7 @@ export const AdminView: React.FC<AdminViewProps> = ({
     setLoginError("");
     const success = onLogin(emailInput.trim(), passwordInput);
     if (!success) {
-      setLoginError("Invalid administrator credentials. Try demo: admin@kvs.local / kvsadmin");
+      setLoginError("Invalid administrator credentials. Try demo: admin@upsc.local / upscadmin");
     } else {
       setEmailInput("");
       setPasswordInput("");
@@ -81,7 +81,7 @@ export const AdminView: React.FC<AdminViewProps> = ({
       options: [...options],
       correctIndex,
       explanation: newExplanation.trim() || "Verified official reference question.",
-      sourceRef: newSourceRef.trim() || "KVS Education Code / GFR 2017",
+      sourceRef: newSourceRef.trim() || "Administrative Code / GFR 2017",
       published: true
     });
     setNewTopic("");
@@ -132,7 +132,7 @@ export const AdminView: React.FC<AdminViewProps> = ({
                 required
                 value={emailInput}
                 onChange={(e) => setEmailInput(e.target.value)}
-                placeholder="admin@kvs.local"
+                placeholder="admin@upsc.local"
                 className="w-full h-11 px-3.5 rounded-xl border border-[#C5BAA0] bg-[#FAF6EC] text-xs sm:text-sm outline-none focus:border-[#4a5f36] text-[#2f3b26]"
               />
             </div>
@@ -159,7 +159,7 @@ export const AdminView: React.FC<AdminViewProps> = ({
 
           <div className="pt-3 border-t border-[#E2D8C0] text-center">
             <p className="text-[11px] text-[#7e725d]">
-              Demo: <span className="font-mono text-[#2f3b26] font-semibold">admin@kvs.local</span> / <span className="font-mono text-[#2f3b26] font-semibold">kvsadmin</span>
+              Demo: <span className="font-mono text-[#2f3b26] font-semibold">admin@upsc.local</span> / <span className="font-mono text-[#2f3b26] font-semibold">upscadmin</span>
             </p>
           </div>
         </div>
@@ -179,7 +179,7 @@ export const AdminView: React.FC<AdminViewProps> = ({
             <span className="text-xs text-[#6e634f]">Logged in as {activeAdmin.email}</span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-bold text-[#1f2918] font-serif-title mt-1">
-            KVS Portal Administrative Workspace
+            UPSC Portal Administrative Workspace
           </h2>
         </div>
 
@@ -338,7 +338,7 @@ export const AdminView: React.FC<AdminViewProps> = ({
                 required
                 value={newAnnTitle}
                 onChange={(e) => setNewAnnTitle(e.target.value)}
-                placeholder="e.g. KVS LDCE Exam Date Schedule Released"
+                placeholder="e.g. Administrative Exam CBT Date Schedule Released"
                 className="w-full h-10 px-3 rounded-xl border border-[#C5BAA0] bg-[#FAF6EC] text-xs outline-none focus:border-[#4a5f36]"
               />
             </div>
