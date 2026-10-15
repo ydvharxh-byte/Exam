@@ -10,13 +10,18 @@ export type Page =
 export type ResourceItem = {
   id: string;
   title: string;
+  description: string;
+  category: string;
+  fileType: "pdf" | "doc" | "presentation" | "folder" | "other" | string;
+  sourceUrl: string;
+  driveUrl?: string;
+  dateAdded?: string;
   code?: string;
-  type: "pdf" | "doc" | "presentation" | "folder" | "other";
-  topic: string;
-  module: "Admin & Finance" | "Perspectives in Education" | "Pedagogy & Evaluation" | "School Safety & Law" | "General & Languages";
-  sourceFolder: "study" | "quiz";
-  url: string;
-  description?: string;
+  type?: "pdf" | "doc" | "presentation" | "folder" | "other" | string;
+  topic?: string;
+  module?: "Admin & Finance" | "Perspectives in Education" | "Pedagogy & Evaluation" | "School Safety & Law" | "General & Languages" | string;
+  sourceFolder?: "study" | "quiz";
+  url?: string;
   size?: string;
   pages?: number;
   featured?: boolean;

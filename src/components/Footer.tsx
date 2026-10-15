@@ -1,6 +1,7 @@
 import React from "react";
 import { Page } from "../data/types";
-import { ShieldCheck } from "lucide-react";
+import { ShieldCheck, Send } from "lucide-react";
+import { TELEGRAM_CONFIG } from "../config/telegram";
 
 interface FooterProps {
   onNavigate: (page: Page) => void;
@@ -22,7 +23,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         </div>
 
         {/* Right Quote & Botanical Leaf & Admin access */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <span className="italic font-serif text-[#4A5E52] hidden sm:inline">
             "Integrity, efficiency, and dedication build a stronger nation."
           </span>
@@ -35,6 +36,17 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               />
             </svg>
           </div>
+
+          <a
+            href={TELEGRAM_CONFIG.inviteUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#173F35] hover:text-[#286B50] bg-[#FAF6ED] hover:bg-[#F4EEDC] transition flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-0.5 rounded border border-[#D5CBB4] cursor-pointer"
+            title="Join Private Telegram Channel"
+          >
+            <Send className="w-3 h-3 text-[#286B50]" />
+            <span>Telegram</span>
+          </a>
 
           <button
             onClick={() => onNavigate("admin")}

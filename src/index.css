@@ -26,6 +26,33 @@ body {
   font-family: var(--font-hindi);
 }
 
+/* Academic Editorial Design System */
+:root {
+  --editorial-forest: #173F35;
+  --editorial-leaf: #286B50;
+  --editorial-lime: #B8D986;
+  --editorial-cream: #F4EEDC;
+  --editorial-charcoal: #252923;
+  --editorial-cream-soft: #F9F5EC;
+  --editorial-cream-light: #FCFAF5;
+}
+
+.bg-editorial-forest { background-color: #173F35; }
+.bg-editorial-leaf { background-color: #286B50; }
+.bg-editorial-lime { background-color: #B8D986; }
+.bg-editorial-cream { background-color: #F4EEDC; }
+.bg-editorial-charcoal { background-color: #252923; }
+
+.text-editorial-forest { color: #173F35; }
+.text-editorial-leaf { color: #286B50; }
+.text-editorial-lime { color: #B8D986; }
+.text-editorial-charcoal { color: #252923; }
+
+.border-editorial-forest { border-color: #173F35; }
+.border-editorial-leaf { border-color: #286B50; }
+.border-editorial-lime { border-color: #B8D986; }
+.border-editorial-cream { border-color: #F4EEDC; }
+
 /* Botanical KVS Palette */
 .bg-kvs-forest {
   background-color: #11382B;
