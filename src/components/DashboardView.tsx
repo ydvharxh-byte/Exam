@@ -12,7 +12,10 @@ import {
   ExternalLink,
   Sparkles,
   CheckCircle2,
-  Award
+  Award,
+  Clock,
+  Copy,
+  Check
 } from "lucide-react";
 
 interface DashboardViewProps {
@@ -26,11 +29,13 @@ interface DashboardViewProps {
   savedResourcesCount?: number;
   completedQuizzesCount?: number;
   onOpenPracticeMore?: () => void;
+  onStartMockTest?: (topic?: "csmop" | "chapter5") => void;
 }
 
 export const DashboardView: React.FC<DashboardViewProps> = ({
   onNavigate,
-  onOpenPracticeMore
+  onOpenPracticeMore,
+  onStartMockTest
 }) => {
   const [heroSlide, setHeroSlide] = useState(0);
 
@@ -167,10 +172,10 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             {onOpenPracticeMore && (
               <button
                 onClick={onOpenPracticeMore}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#EAF3EC] hover:bg-[#D5EADB] text-[#11382B] text-xs font-bold border border-[#C5D9CB] transition shadow-2xs cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#11382B] hover:bg-[#1A4B37] text-white text-xs font-bold transition shadow-xs cursor-pointer"
               >
-                <FolderOpen className="w-3.5 h-3.5 text-[#11382B]" />
-                <span>Practice More (Drive)</span>
+                <FolderOpen className="w-3.5 h-3.5 text-[#B8D986]" />
+                <span>Official Drive Library</span>
               </button>
             )}
             <button
@@ -313,36 +318,49 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             </div>
           </div>
 
-          {/* Right: Stacked Widgets (Days Left + Latest Announcement) */}
+          {/* Right: Stacked Widgets (Chapter 5 Quiz + Interactive Practice MCQs) */}
           <div className="lg:col-span-4 flex flex-col justify-between gap-3.5">
-            {/* Widget 1: Days Left */}
-            <div className="rounded-2xl bg-[#11382B] text-white p-4 sm:p-5 flex items-center justify-between shadow-xs border border-[#1E4D3B]/50">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center border border-white/20 text-[#A6CDB6]">
-                  <Calendar className="w-5 h-5" />
+            {/* Widget 1: Education Chapter 5 Quick Quiz */}
+            <div className="rounded-2xl bg-[#11382B] text-white p-4 sm:p-5 flex flex-col justify-between shadow-xs border border-[#235843] relative overflow-hidden group">
+              <div className="absolute -right-8 -bottom-8 w-28 h-28 rounded-full bg-emerald-400/10 blur-xl pointer-events-none"></div>
+
+              <div className="space-y-2">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#E5F1E9] text-[#11382B] text-[10px] font-bold uppercase tracking-wider shadow-2xs">
+                    <Sparkles className="w-3 h-3 text-amber-600" />
+                  <span>Education – Chapter 5</span>
+                  </span>
+                  <span className="px-2 py-0.5 rounded-md bg-white/15 text-[10px] font-mono font-bold text-[#A6CDB6]">
+                    10 Qs • 15 M
+                  </span>
                 </div>
-                <div>
-                  <p className="text-sm font-bold text-white leading-tight font-serif-title">
-                    Days Left
-                  </p>
-                  <p className="text-[11px] text-[#A6CDB6] mt-0.5">
-                    Target Administrative Exam
-                  </p>
-                </div>
+
+                <h3 className="text-sm sm:text-base font-bold font-serif-title text-white leading-snug group-hover:text-[#D5EADB] transition">
+                  Educational Planning &amp; Management
+                </h3>
+
+                <p className="text-[11px] text-[#BFD6C8] leading-relaxed">
+                  Quick 10-question timed practice covering Chapter 5 of educational administration with instant feedback.
+                </p>
               </div>
 
-              {/* Big Countdown Box */}
-              <div className="px-4 py-2 rounded-xl bg-white/10 border border-white/20 text-center min-w-[70px]">
-                <p className="text-2xl font-bold font-serif-title leading-none text-white">
-                  42
-                </p>
-                <p className="text-[9px] uppercase tracking-widest text-[#A6CDB6] font-bold mt-0.5">
-                  DAYS
-                </p>
+              <div className="pt-3 mt-3 border-t border-white/15 flex items-center justify-between gap-2">
+                <span className="text-[11px] text-[#A6CDB6] font-medium flex items-center gap-1">
+                  <Clock className="w-3 h-3" />
+                  <span>15 Mins CBT</span>
+                </span>
+
+                <button
+                  onClick={() => onStartMockTest ? onStartMockTest("chapter5") : onNavigate("quizzes")}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#E5F1E9] hover:bg-[#D5EADB] text-[#11382B] text-xs font-bold shadow-xs transition transform hover:scale-[1.02] cursor-pointer"
+                >
+                  <span>Start Practice Quiz</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
               </div>
             </div>
 
-            {/* Widget 2: Interactive Practice MCQs Hub (Replaces preloaded alert) */}
+            {/* Widget 2: Interactive Practice MCQs Hub */}
             <div className="rounded-2xl bg-white border border-[#E2E8E2] p-4 sm:p-5 shadow-xs flex-1 flex flex-col justify-between">
               <div>
                 <div className="flex items-center gap-2 mb-2">
@@ -370,7 +388,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                 </span>
 
                 <button
-                  onClick={() => onNavigate("quizzes")}
+                  onClick={() => onStartMockTest ? onStartMockTest("csmop") : onNavigate("quizzes")}
                   className="font-bold text-[#11382B] hover:underline flex items-center gap-1 cursor-pointer"
                 >
                   <span>Start Test</span>
@@ -382,23 +400,23 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         </div>
       </section>
 
-      {/* 3. All 10 Subject Quizzes & Practice Tests (10 Topics) */}
+      {/* 3. Google Drive Study Repositories (10 Subject Topics) */}
       <section className="space-y-5">
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#EAF3EC] text-[#11382B] text-[10px] font-bold uppercase tracking-wider border border-[#C6DC CE]">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#EAF3EC] text-[#11382B] text-[10px] font-bold uppercase tracking-wider border border-[#C6DCCE]">
                 <Sparkles className="w-3 h-3 text-amber-500" />
-                10 Subject Quizzes & Tests
+                Verified Google Drive Repository
               </span>
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
             </div>
             <h2 className="text-xl sm:text-2xl font-bold font-serif-title text-[#142D21]">
-              Subject Practice Quizzes & Topic Tests
+              Official Study Drive & Topic Repositories
             </h2>
             <p className="text-xs sm:text-sm text-[#55695E]">
-              Interactive practice quizzes, mock question papers, and question banks across all 10 examination topics.
+              Direct access to 12 subject-wise Drive folders curated for the Central Administrative & Leadership Examination.
             </p>
           </div>
 
@@ -408,32 +426,31 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#11382B] hover:bg-[#1A4B37] text-white text-xs font-bold transition shadow-xs cursor-pointer self-start sm:self-auto"
             >
               <FolderOpen className="w-4 h-4 text-amber-300" />
-              <span>Browse All 10 Quizzes</span>
+              <span>Browse All 12 Repositories</span>
               <ExternalLink className="w-3.5 h-3.5" />
             </button>
           )}
         </div>
 
-        {/* 10 Topic Quizzes Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3.5">
+        {/* 10 Subject Drive Repository Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {practiceDriveTopics.map((item) => {
-            const isOfficeProcedure = item.id === 8;
             return (
               <div
                 key={item.id}
-                className="p-4 rounded-2xl bg-white border border-[#E2E8E2] hover:border-[#11382B] shadow-2xs hover:shadow-md transition flex flex-col justify-between group"
+                className="p-5 rounded-2xl bg-white border border-[#E2E8E2] hover:border-[#11382B] shadow-2xs hover:shadow-md transition flex flex-col justify-between group"
               >
                 <div className="space-y-2.5">
                   <div className="flex items-center justify-between">
                     <span className="text-[11px] font-mono font-bold text-[#11382B] bg-[#EAF3EC] px-2 py-0.5 rounded-md border border-[#D0E2D5]">
                       #{String(item.id).padStart(2, "0")}
                     </span>
-                    <span className="text-[10px] uppercase font-bold tracking-wider text-[#6C7E74] truncate max-w-[120px]">
-                      {item.category}
+                    <span className="text-[10px] uppercase font-bold tracking-wider text-[#11382B] bg-[#F4F6F2] px-2 py-0.5 rounded-full border border-[#DDE4DF]">
+                      {item.badge || item.category}
                     </span>
                   </div>
 
-                  <h3 className="text-sm font-bold font-serif-title text-[#142D21] group-hover:text-[#11382B] transition line-clamp-2">
+                  <h3 className="text-sm sm:text-base font-bold font-serif-title text-[#142D21] group-hover:text-[#11382B] transition leading-snug">
                     {item.title}
                   </h3>
 
@@ -442,26 +459,20 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                   </p>
                 </div>
 
-                <div className="pt-3 mt-3 border-t border-[#EDF2EE] space-y-2">
+                <div className="pt-4 mt-4 border-t border-[#EDF2EE] flex items-center justify-between gap-2">
+                  <span className="text-[11px] font-semibold text-[#6C7E74]">
+                    Google Drive PDF
+                  </span>
+
                   <a
                     href={item.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full py-2 px-3 rounded-xl bg-[#F4F6F2] hover:bg-[#11382B] group-hover:bg-[#11382B] text-[#11382B] group-hover:text-white text-xs font-bold transition flex items-center justify-center gap-1.5 border border-[#DDE4DF]"
+                    className="py-2 px-3.5 rounded-xl bg-[#11382B] hover:bg-[#1A4B37] text-white text-xs font-bold transition flex items-center justify-center gap-1.5 shadow-2xs cursor-pointer"
                   >
-                    <span>Start Topic Quiz</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
+                    <span>Open in Drive</span>
+                    <ExternalLink className="w-3.5 h-3.5 text-[#B8D986]" />
                   </a>
-
-                  {isOfficeProcedure && (
-                    <button
-                      onClick={() => onNavigate("quizzes")}
-                      className="w-full py-1.5 px-2 rounded-lg bg-[#EAF3EC] hover:bg-[#D5EADB] text-[#11382B] text-[11px] font-bold transition flex items-center justify-center gap-1 cursor-pointer"
-                    >
-                      <Sparkles className="w-3 h-3 text-amber-500" />
-                      <span>Take 51 In-Site MCQs</span>
-                    </button>
-                  )}
                 </div>
               </div>
             );

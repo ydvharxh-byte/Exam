@@ -103,7 +103,7 @@ export const PracticeMoreDrawer: React.FC<PracticeMoreDrawerProps> = ({
         <div className="bg-[#EAF3EC] border-b border-[#D3E4D7] px-5 py-2.5 flex items-center justify-between text-xs text-[#142D21]">
           <span className="flex items-center gap-2 font-medium">
             <FolderOpen className="w-4 h-4 text-[#11382B]" />
-            <span>10 Curated Drive Folders with Notes, Quizzes & Reference Books</span>
+            <span>12 Subject Drive Repositories curated for the Central Administrative & Leadership Exam</span>
           </span>
           <span className="text-[11px] font-bold text-[#11382B] uppercase tracking-wider bg-white px-2 py-0.5 rounded-full border border-[#C5D9CB]">
             100% Free Access
@@ -117,7 +117,7 @@ export const PracticeMoreDrawer: React.FC<PracticeMoreDrawerProps> = ({
               i
             </div>
             <span>
-              <strong>Newbie Tip:</strong> Click any topic below to open its dedicated Google Drive repository in a new tab. All PDFs, modules, and notes are free for all aspirants.
+              <strong>Beginner Tip:</strong> Click any topic below to open its dedicated Google Drive repository in a new tab. All PDFs, cheatsheets, and practice papers are free and accessible.
             </span>
           </div>
 
@@ -125,7 +125,7 @@ export const PracticeMoreDrawer: React.FC<PracticeMoreDrawerProps> = ({
           <div className="relative">
             <input
               type="text"
-              placeholder="Search topics (e.g. Hindi, Maths, Office Procedure, Pedagogy)..."
+              placeholder="Search topics (e.g. General Awareness, Hindi, Reasoning, Office Procedure, Pedagogy)..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full h-10 pl-9 pr-4 text-xs rounded-xl border border-[#D5E0D7] bg-[#F8FAF8] outline-none focus:border-[#11382B] focus:bg-white transition"

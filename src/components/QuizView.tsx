@@ -70,7 +70,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
     // Default to Chapter 5 (10 questions)
     const ch5List = questions.filter((q) => q.topic === "Educational Planning and Management");
     const list = [...ch5List];
-    while (list.length < 10) {
+    while (list.length < 10 && questions.length > 0) {
       list.push(questions[list.length % questions.length]);
     }
     return list.slice(0, 10);
@@ -399,7 +399,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#EAF3EC] hover:bg-[#D5EADB] text-[#11382B] text-xs font-bold border border-[#C5D9CB] transition shadow-2xs cursor-pointer"
                 >
                   <FolderOpen className="w-3.5 h-3.5 text-[#11382B]" />
-                  <span>Practice More (Drive)</span>
+                  <span>Official Drive Library</span>
                 </button>
               )}
             </div>
@@ -568,7 +568,7 @@ export const QuizView: React.FC<QuizViewProps> = ({
                       {/* Option Text */}
                       <span className="flex-1 leading-relaxed">
                         <span className="font-bold mr-1.5">{letter}.</span>
-                        <span>{opt}</span>
+                        <span>{opt.replace(/^(?:[A-Da-d1-4][\.\)]|\([A-Da-d1-4]\))\s*/, '')}</span>
                       </span>
                     </button>
                   );
@@ -736,84 +736,81 @@ export const QuizView: React.FC<QuizViewProps> = ({
               </button>
             </div>
 
-            {/* Widget 2: High-Yield CSMoP & Office Rules Cheat Sheet (Exam Goldmine) */}
+            {/* Widget 2: High-Yield Cheat Sheet / Section Breakdown */}
             <div className="rounded-2xl bg-white border border-[#E2E8E2] p-5 shadow-xs space-y-3">
               <div className="flex items-center justify-between">
                 <h3 className="text-sm font-bold font-serif-title text-[#142D21] flex items-center gap-1.5">
                   <Sparkles className="w-4 h-4 text-amber-500" />
                   <span>CSMoP Rulebook Cheat Sheet</span>
                 </h3>
-                <span className="text-[10px] text-[#55695E] bg-[#F4F6F2] px-2 py-0.5 rounded-md font-mono">
-                  Govt Rules
-                </span>
+                <span className="text-[10px] text-[#55695E] bg-[#F4F6F2] px-2 py-0.5 rounded-md font-mono">Govt Rules</span>
               </div>
-
               <p className="text-[11px] text-[#55695E] leading-relaxed">
-                Key principles tested in Central Administrative recruitment:
-              </p>
+                  Key principles tested in Central Administrative recruitment:
+                </p>
 
-              <div className="space-y-2 text-xs text-[#2A3F33] max-h-60 overflow-y-auto pr-1">
-                <div className="p-2.5 rounded-xl bg-[#F7F9F7] border border-[#E5EBE6] space-y-1">
-                  <p className="font-bold text-[#11382B] flex items-center gap-1 text-[11px]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#11382B]"></span>
-                    Administrative Hierarchy
-                  </p>
-                  <p className="text-[11px] text-[#475C50] leading-snug">
-                    Section (lowest, headed by SO) → Branch (Under Secretary) → Division (Deputy Secy/Director) → Wing (Joint Secretary) → Dept/Ministry.
-                  </p>
-                </div>
+                  <div className="space-y-2 text-xs text-[#2A3F33] max-h-60 overflow-y-auto pr-1">
+                    <div className="p-2.5 rounded-xl bg-[#F7F9F7] border border-[#E5EBE6] space-y-1">
+                      <p className="font-bold text-[#11382B] flex items-center gap-1 text-[11px]">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#11382B]"></span>
+                        Administrative Hierarchy
+                      </p>
+                      <p className="text-[11px] text-[#475C50] leading-snug">
+                        Section (lowest, headed by SO) → Branch (Under Secretary) → Division (Deputy Secy/Director) → Wing (Joint Secretary) → Dept/Ministry.
+                      </p>
+                    </div>
 
-                <div className="p-2.5 rounded-xl bg-[#F7F9F7] border border-[#E5EBE6] space-y-1">
-                  <p className="font-bold text-[#11382B] flex items-center gap-1 text-[11px]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#11382B]"></span>
-                    Record Retention Categories
-                  </p>
-                  <p className="text-[11px] text-[#475C50] leading-snug">
-                    • <strong>Category C-5:</strong> Retain for 5 years<br />
-                    • <strong>Category C-10:</strong> Retain for 10 years<br />
-                    • <strong>Category A:</strong> Permanent preservation & National Archives after 25 years.
-                  </p>
-                </div>
+                    <div className="p-2.5 rounded-xl bg-[#F7F9F7] border border-[#E5EBE6] space-y-1">
+                      <p className="font-bold text-[#11382B] flex items-center gap-1 text-[11px]">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#11382B]"></span>
+                        Record Retention Categories
+                      </p>
+                      <p className="text-[11px] text-[#475C50] leading-snug">
+                        • <strong>Category C-5:</strong> Retain for 5 years<br />
+                        • <strong>Category C-10:</strong> Retain for 10 years<br />
+                        • <strong>Category A:</strong> Permanent preservation & National Archives after 25 years.
+                      </p>
+                    </div>
 
-                <div className="p-2.5 rounded-xl bg-[#F7F9F7] border border-[#E5EBE6] space-y-1">
-                  <p className="font-bold text-[#11382B] flex items-center gap-1 text-[11px]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#11382B]"></span>
-                    Official Forms of Communication
-                  </p>
-                  <p className="text-[11px] text-[#475C50] leading-snug">
-                    • <strong>Office Memorandum:</strong> 3rd person, no salutation, inter-ministry.<br />
-                    • <strong>Demi-Official (DO):</strong> 1st person, personal attention.<br />
-                    • <strong>Office Order:</strong> Leave, internal postings, section allocation.<br />
-                    • <strong>Order:</strong> Financial sanctions & disciplinary action.<br />
-                    • <strong>Notification:</strong> Statutory rules & gazetted officers.<br />
-                    • <strong>Endorsement:</strong> Forwarding papers in original.
-                  </p>
-                </div>
+                    <div className="p-2.5 rounded-xl bg-[#F7F9F7] border border-[#E5EBE6] space-y-1">
+                      <p className="font-bold text-[#11382B] flex items-center gap-1 text-[11px]">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#11382B]"></span>
+                        Official Forms of Communication
+                      </p>
+                      <p className="text-[11px] text-[#475C50] leading-snug">
+                        • <strong>Office Memorandum:</strong> 3rd person, no salutation, inter-ministry.<br />
+                        • <strong>Demi-Official (DO):</strong> 1st person, personal attention.<br />
+                        • <strong>Office Order:</strong> Leave, internal postings, section allocation.<br />
+                        • <strong>Order:</strong> Financial sanctions & disciplinary action.<br />
+                        • <strong>Notification:</strong> Statutory rules & gazetted officers.<br />
+                        • <strong>Endorsement:</strong> Forwarding papers in original.
+                      </p>
+                    </div>
 
-                <div className="p-2.5 rounded-xl bg-[#F7F9F7] border border-[#E5EBE6] space-y-1">
-                  <p className="font-bold text-[#11382B] flex items-center gap-1 text-[11px]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#11382B]"></span>
-                    Key Definitions
-                  </p>
-                  <p className="text-[11px] text-[#475C50] leading-snug">
-                    • <strong>PUC:</strong> Paper Under Consideration.<br />
-                    • <strong>Level Jumping:</strong> Case should not pass through &gt;2-3 levels.<br />
-                    • <strong>Call Book:</strong> For cases halted for reasons beyond office control.
-                  </p>
-                </div>
-              </div>
+                    <div className="p-2.5 rounded-xl bg-[#F7F9F7] border border-[#E5EBE6] space-y-1">
+                      <p className="font-bold text-[#11382B] flex items-center gap-1 text-[11px]">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#11382B]"></span>
+                        Key Definitions
+                      </p>
+                      <p className="text-[11px] text-[#475C50] leading-snug">
+                        • <strong>PUC:</strong> Paper Under Consideration.<br />
+                        • <strong>Level Jumping:</strong> Case should not pass through &gt;2-3 levels.<br />
+                        • <strong>Call Book:</strong> For cases halted for reasons beyond office control.
+                      </p>
+                    </div>
+                  </div>
 
-              {/* Direct Link to Folder 8 Drive Notes */}
+              {/* Direct Link to Verified Drive Notes */}
               <div className="pt-2 border-t border-[#EDF2EE]">
                 <a
-                  href="https://drive.google.com/drive/folders/1IGEAJeq6bHtFCKpV28U2HuKgPqVIFuzo?usp=drive_link"
+                  href="https://drive.google.com/file/d/1vGGEvJ8QRYKOjwKYJAucaW15VdL6kCAv/view?usp=drive_link"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full py-2 px-3 rounded-xl bg-[#EAF3EC] hover:bg-[#D5EADB] text-[#11382B] text-xs font-bold transition flex items-center justify-between group"
                 >
                   <span className="flex items-center gap-1.5">
                     <FolderOpen className="w-3.5 h-3.5 text-[#11382B]" />
-                    <span>Open Office Procedure Drive Folder</span>
+                    <span>Open DSEA 1973 Notes (Drive)</span>
                   </span>
                   <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition" />
                 </a>

@@ -76,6 +76,7 @@ function uid(prefix: string) {
 export default function App() {
   const [currentPage, setCurrentPage] = useState<Page>("dashboard");
   const [isPracticeMoreOpen, setIsPracticeMoreOpen] = useState(false);
+  const [activeQuizTopic, setActiveQuizTopic] = useState<"chapter5" | "csmop" | "all">("chapter5");
 
   // Participant Profile State (Defaults to Harsh as in the design)
   const [participantId, setParticipantId] = useState<string>(
@@ -95,9 +96,14 @@ export default function App() {
   const [resources] = useState<ResourceItem[]>(
     () => readJSON(STORE_KEYS.resources, starterResources)
   );
-  const [questions, setQuestions] = useState<Question[]>(
-    () => readJSON(STORE_KEYS.questions, starterQuestions)
-  );
+  const [questions, setQuestions] = useState<Question[]>(() => {
+    const stored = readJSON<Question[]>(STORE_KEYS.questions, starterQuestions);
+    const hasMock = stored.some((q) => q.id.startsWith("upsc-mock-1"));
+    if (!hasMock) {
+      return starterQuestions;
+    }
+    return stored;
+  });
   const [threads, setThreads] = useState<DiscussionThread[]>(
     () => readJSON(STORE_KEYS.threads, starterThreads)
   );
@@ -364,6 +370,10 @@ export default function App() {
             savedResourcesCount={savedResourceIds.length}
             completedQuizzesCount={completedQuizzes.length}
             onOpenPracticeMore={() => setIsPracticeMoreOpen(true)}
+            onStartMockTest={(topic = "chapter5") => {
+              setActiveQuizTopic(topic as "chapter5" | "csmop" | "all");
+              setCurrentPage("quizzes");
+            }}
           />
         )}
 
