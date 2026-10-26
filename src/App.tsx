@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { Page, ResourceItem, Question, DiscussionThread, DiscussionReply, Announcement, AdminUser, ActivityLog } from "./data/types";
+import { Page, ResourceItem, Question, DiscussionThread, DiscussionReply, Announcement, AdminUser, ActivityLog, MockTestItem } from "./data/types";
 import { starterResources } from "./data/resources";
 import { starterQuestions } from "./data/questions";
 import { starterThreads, starterReplies } from "./data/discussions";
 import { starterAnnouncements } from "./data/announcements";
+import { starterMockTests } from "./data/mockTests";
 
 import { Navbar } from "./components/Navbar";
 import { WelcomeScreen } from "./components/WelcomeScreen";
@@ -11,6 +12,7 @@ import { DashboardView } from "./components/DashboardView";
 import { SyllabusView } from "./components/SyllabusView";
 import { ResourcesView } from "./components/ResourcesView";
 import { QuizView } from "./components/QuizView";
+import { MockTestsView } from "./components/MockTestsView";
 import { DiscussionView } from "./components/DiscussionView";
 import { AnnouncementsView } from "./components/AnnouncementsView";
 import { AdminView } from "./components/AdminView";
@@ -32,6 +34,7 @@ const STORE_KEYS = {
   completedQuizzes: "exam_completed_quizzes_v3",
   admins: "exam_admins_v3",
   logs: "exam_logs_v3",
+  mockTests: "exam_mock_tests_v3",
 };
 
 const defaultAdmins: AdminUser[] = [
@@ -123,6 +126,12 @@ export default function App() {
     () => readJSON(STORE_KEYS.dismissals, [])
   );
 
+  // Mock Tests State
+  const [mockTests, setMockTests] = useState<MockTestItem[]>(
+    () => readJSON(STORE_KEYS.mockTests, starterMockTests)
+  );
+  const [activeMockTestId, setActiveMockTestId] = useState<string | null>(null);
+
   // Admin State
   const [admins] = useState<AdminUser[]>(
     () => readJSON(STORE_KEYS.admins, defaultAdmins)
@@ -146,6 +155,8 @@ export default function App() {
           setAnnouncements(readJSON(STORE_KEYS.announcements, starterAnnouncements));
         } else if (event.data === "questions") {
           setQuestions(readJSON(STORE_KEYS.questions, starterQuestions));
+        } else if (event.data === "mockTests") {
+          setMockTests(readJSON(STORE_KEYS.mockTests, starterMockTests));
         }
       };
     } catch {
@@ -177,6 +188,10 @@ export default function App() {
   useEffect(() => { saveJSON(STORE_KEYS.dismissals, dismissedIds); }, [dismissedIds]);
   useEffect(() => { saveJSON(STORE_KEYS.admins, admins); }, [admins]);
   useEffect(() => { saveJSON(STORE_KEYS.logs, logs); }, [logs]);
+  useEffect(() => { 
+    saveJSON(STORE_KEYS.mockTests, mockTests); 
+    try { new BroadcastChannel("upsc-live-updates").postMessage("mockTests"); } catch {}
+  }, [mockTests]);
 
   const pushLog = (message: string) => {
     const entry: ActivityLog = {
@@ -311,6 +326,46 @@ export default function App() {
     pushLog(`New question created in bank: ${newQ.topic}`);
   };
 
+  // Mock Test actions
+  const handleAddMockTest = (testData: Omit<MockTestItem, "id">, autoAnnounce = true) => {
+    const newTestId = uid("mock");
+    const newTest: MockTestItem = {
+      id: newTestId,
+      ...testData
+    };
+    setMockTests((prev) => [newTest, ...prev]);
+    pushLog(`Admin published Mock Test: ${newTest.title} (${newTest.totalQuestions} Questions)`);
+
+    // Automatically announce across website if requested
+    if (autoAnnounce) {
+      const newAnn: Announcement = {
+        id: uid("ann"),
+        title: `🎯 New Mock Test Released: ${newTest.title}`,
+        message: `The official ${newTest.type === "mock_test" ? "Mock CBT Exam" : "Sample Paper"} "${newTest.title}" (${newTest.totalQuestions} Questions, ${newTest.durationMinutes} Mins, ${newTest.totalMarks} Marks) with verified interactive answer key is now active. Practice in CBT mode now!`,
+        publicationDate: new Date().toISOString(),
+        priority: "High",
+        category: "Exam Alert",
+        linkText: "Attempt Mock Test Now",
+        linkUrl: "mocktests",
+        active: true
+      };
+      setAnnouncements((prev) => [newAnn, ...prev]);
+      pushLog(`Auto-announced new mock test: ${newTest.title}`);
+    }
+  };
+
+  const handleToggleMockTestPublish = (id: string) => {
+    setMockTests((prev) =>
+      prev.map((t) => (t.id === id ? { ...t, published: !t.published } : t))
+    );
+    pushLog(`Toggled publish status for Mock Test ID ${id}`);
+  };
+
+  const handleDeleteMockTest = (id: string) => {
+    setMockTests((prev) => prev.filter((t) => t.id !== id));
+    pushLog(`Deleted Mock Test ID ${id}`);
+  };
+
   const handleToggleAnnouncement = (id: string) => {
     setAnnouncements((prev) =>
       prev.map((a) => (a.id === id ? { ...a, active: !a.active } : a))
@@ -367,6 +422,11 @@ export default function App() {
             announcements={announcements}
             resources={resources}
             questions={questions}
+            mockTests={mockTests}
+            onSelectMockTest={(id) => {
+              setActiveMockTestId(id);
+              setCurrentPage("mocktests");
+            }}
             savedResourcesCount={savedResourceIds.length}
             completedQuizzesCount={completedQuizzes.length}
             onOpenPracticeMore={() => setIsPracticeMoreOpen(true)}
@@ -398,6 +458,15 @@ export default function App() {
           />
         )}
 
+        {currentPage === "mocktests" && (
+          <MockTestsView
+            mockTests={mockTests}
+            onNavigate={setCurrentPage}
+            initialTestId={activeMockTestId}
+            onClearInitialTest={() => setActiveMockTestId(null)}
+          />
+        )}
+
         {currentPage === "discussion" && (
           <DiscussionView
             threads={threads}
@@ -417,6 +486,7 @@ export default function App() {
             dismissedIds={dismissedIds}
             onDismiss={handleDismissAnnouncement}
             onNavigateToSyllabus={() => setCurrentPage("syllabus")}
+            onNavigate={setCurrentPage}
           />
         )}
 
@@ -435,6 +505,10 @@ export default function App() {
             resources={resources}
             onSyncResources={handleSyncResources}
             logs={logs}
+            mockTests={mockTests}
+            onAddMockTest={handleAddMockTest}
+            onToggleMockTestPublish={handleToggleMockTestPublish}
+            onDeleteMockTest={handleDeleteMockTest}
           />
         )}
       </main>

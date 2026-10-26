@@ -1,5 +1,4 @@
-import React from "react";
-import { Announcement } from "../data/types";
+import { Announcement, Page } from "../data/types";
 import { Bell, Calendar, ExternalLink } from "lucide-react";
 
 interface AnnouncementsViewProps {
@@ -7,13 +6,15 @@ interface AnnouncementsViewProps {
   dismissedIds: string[];
   onDismiss: (id: string) => void;
   onNavigateToSyllabus?: () => void;
+  onNavigate?: (page: Page) => void;
 }
 
 export const AnnouncementsView: React.FC<AnnouncementsViewProps> = ({
   announcements,
   dismissedIds,
   onDismiss,
-  onNavigateToSyllabus
+  onNavigateToSyllabus,
+  onNavigate
 }) => {
   const activeAnnouncements = announcements
     .filter((a) => a.active)
@@ -88,16 +89,22 @@ export const AnnouncementsView: React.FC<AnnouncementsViewProps> = ({
               </p>
 
               <div className="pt-3 border-t border-[#E2D8C0] flex items-center justify-between text-xs">
-                {item.linkText && onNavigateToSyllabus ? (
+                {item.linkText ? (
                   <button
-                    onClick={onNavigateToSyllabus}
-                    className="font-bold text-[#3c4e2e] hover:underline flex items-center gap-1"
+                    onClick={() => {
+                      if (item.linkUrl && onNavigate) {
+                        onNavigate(item.linkUrl as Page);
+                      } else if (onNavigateToSyllabus) {
+                        onNavigateToSyllabus();
+                      }
+                    }}
+                    className="font-bold text-[#3c4e2e] hover:underline flex items-center gap-1 cursor-pointer"
                   >
                     <span>{item.linkText}</span>
                     <ExternalLink className="w-3 h-3" />
                   </button>
                 ) : (
-                  <span className="text-[#8a7f66] text-[11px]">Official UPSC Commission Release</span>
+                  <span className="text-[#8a7f66] text-[11px]">Official Examination Announcement</span>
                 )}
 
                 <button

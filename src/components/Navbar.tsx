@@ -11,7 +11,8 @@ import {
   Menu, 
   X,
   Sparkles,
-  FolderOpen
+  FolderOpen,
+  Award
 } from "lucide-react";
 
 interface NavbarProps {
@@ -42,12 +43,13 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const navItems: { id: Page; label: string; badgeCount?: number }[] = [
+  const navItems: { id: Page; label: string; badgeCount?: number; badgeText?: string }[] = [
     { id: "dashboard", label: "Home" },
-    { id: "resources", label: "Study Resources" },
-    { id: "quizzes", label: "Practice Quizzes" },
-    { id: "discussion", label: "Doubt Discussion" },
-    { id: "announcements", label: "Announcements", badgeCount: unreadAnnouncementsCount || 3 },
+    { id: "mocktests", label: "Mock Tests", badgeText: "New" },
+    { id: "resources", label: "Resources" },
+    { id: "quizzes", label: "Quizzes" },
+    { id: "discussion", label: "Discussions" },
+    { id: "announcements", label: "Notices", badgeCount: unreadAnnouncementsCount || 3 },
     { id: "syllabus", label: "Exam Pattern" },
   ];
 
@@ -60,32 +62,41 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-[#E2E7E2] shadow-2xs">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 sm:gap-4 px-4 py-2.5 sm:px-6 lg:px-8">
         {/* Left: Brand Logo */}
         <button
           onClick={() => onNavigate("dashboard")}
-          className="flex items-center text-left cursor-pointer transition hover:opacity-95"
+          className="flex items-center text-left cursor-pointer transition hover:opacity-95 shrink-0"
         >
           <KvsLogo />
         </button>
 
-        {/* Center: Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-7 text-sm">
+        {/* Center: Desktop Navigation Links (Clean, No-Wrap, Sleek) */}
+        <nav className="hidden lg:flex items-center gap-1 xl:gap-2.5 text-xs xl:text-[13px]">
           {navItems.map((item) => {
             const active = currentPage === item.id;
             return (
               <button
                 key={item.id}
                 onClick={() => onNavigate(item.id)}
-                className={`relative pb-1.5 pt-1 text-[13.5px] font-medium transition cursor-pointer flex items-center gap-1.5 ${
+                className={`relative px-2.5 xl:px-3 py-1.5 rounded-full font-medium transition cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0 ${
                   active
-                    ? "text-[#11382B] font-bold border-b-2 border-[#11382B]"
-                    : "text-[#55695E] hover:text-[#11382B]"
+                    ? "bg-[#11382B] text-white font-bold shadow-2xs"
+                    : "text-[#4A5D52] hover:text-[#11382B] hover:bg-[#F2F5F3]"
                 }`}
               >
                 <span>{item.label}</span>
+                {item.badgeText && (
+                  <span className={`px-1.5 py-0.2 rounded-full text-[9px] font-bold uppercase tracking-wider leading-none ${
+                    active ? "bg-amber-400 text-[#11382B]" : "bg-emerald-800 text-white"
+                  }`}>
+                    {item.badgeText}
+                  </span>
+                )}
                 {item.badgeCount !== undefined && item.badgeCount > 0 && (
-                  <span className="flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full bg-[#D34537] text-white text-[10px] font-bold leading-none">
+                  <span className={`min-w-[17px] h-[17px] px-1 rounded-full text-[9px] font-bold leading-none inline-flex items-center justify-center ${
+                    active ? "bg-white text-[#11382B]" : "bg-[#D34537] text-white"
+                  }`}>
                     {item.badgeCount}
                   </span>
                 )}
@@ -167,6 +178,20 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <p className="text-[#55695E] text-[11px] mt-0.5 font-medium">Central Administrative Services</p>
                   <p className="text-[#7A8E82] text-[10px]">Administrative & Leadership Examination</p>
                 </div>
+
+                {/* Mock Tests & Sample Papers Quick Link */}
+                <button
+                  onClick={() => { onNavigate("mocktests"); setShowProfileMenu(false); }}
+                  className="w-full px-4 py-2.5 text-left text-[#2B3E32] hover:bg-[#F2F7F3] flex items-center justify-between transition cursor-pointer"
+                >
+                  <span className="flex items-center gap-2">
+                    <Award className="w-3.5 h-3.5 text-emerald-700" />
+                    <span className="font-semibold">Mock Tests &amp; Sample Papers</span>
+                  </span>
+                  <span className="bg-[#EAF3EC] text-[#11382B] font-bold px-1.5 py-0.5 rounded-md text-[9px]">
+                    CBT Ready
+                  </span>
+                </button>
 
                 {/* Quick Practice & Drive Links */}
                 <button
@@ -292,13 +317,20 @@ export const Navbar: React.FC<NavbarProps> = ({
                 }`}
               >
                 <span>{item.label}</span>
-                {item.badgeCount !== undefined && item.badgeCount > 0 && (
-                  <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${
-                    active ? "bg-white text-[#11382B]" : "bg-[#D34537] text-white"
-                  }`}>
-                    {item.badgeCount}
-                  </span>
-                )}
+                <div className="flex items-center gap-1.5">
+                  {item.badgeText && (
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#11382B] text-white">
+                      {item.badgeText}
+                    </span>
+                  )}
+                  {item.badgeCount !== undefined && item.badgeCount > 0 && (
+                    <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${
+                      active ? "bg-white text-[#11382B]" : "bg-[#D34537] text-white"
+                    }`}>
+                      {item.badgeCount}
+                    </span>
+                  )}
+                </div>
               </button>
             );
           })}

@@ -3,6 +3,7 @@ export type Page =
   | "syllabus" 
   | "resources" 
   | "quizzes" 
+  | "mocktests"
   | "discussion" 
   | "announcements" 
   | "admin";
@@ -108,4 +109,43 @@ export type EducatorProfile = {
     total: number;
     date: string;
   }[];
+};
+
+export type MockTestItem = {
+  id: string;
+  title: string;
+  type: "mock_test" | "sample_paper" | "previous_paper";
+  subject: string;
+  description: string;
+  totalQuestions: number;
+  durationMinutes: number;
+  totalMarks: number;
+  negativeMarking?: number;
+  questionPaperPdfUrl?: string;
+  questionPaperPdfName?: string;
+  answerKeyPdfUrl?: string;
+  answerKeyPdfName?: string;
+  answerKeyMap: Record<number, string>; // e.g. { 1: "C", 2: "D", 3: "B", ... }
+  questions?: Question[];
+  createdAt: string;
+  published: boolean;
+  attemptsCount?: number;
+  averageScore?: number;
+  difficulty?: "Easy" | "Medium" | "Hard";
+  tags?: string[];
+  isFeatured?: boolean;
+};
+
+export type MockTestSubmission = {
+  id: string;
+  mockTestId: string;
+  mockTestTitle: string;
+  date: string;
+  score: number;
+  maxScore: number;
+  correctCount: number;
+  incorrectCount: number;
+  unattemptedCount: number;
+  percentage: number;
+  answers: Record<number, string>;
 };
